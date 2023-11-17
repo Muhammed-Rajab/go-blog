@@ -78,3 +78,13 @@ func (m *MongoDB) Connect() {
 	log.Printf("Successfully connected to mongodb: %s\n", m.Url)
 	m.Client = c
 }
+
+// Method to get blog database
+func (m *MongoDB) BlogDatabase() *mongo.Database {
+	return m.Client.Database("test")
+}
+
+// Method to get blogs collection
+func (m *MongoDB) BlogsCollection() *mongo.Collection {
+	return m.BlogDatabase().Collection("blogs")
+}

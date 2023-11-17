@@ -1,8 +1,37 @@
 {{ define "title" }}Home{{ end }}
 <!--  -->
 {{define "body"}}
-<h1>They don't know me son!</h1>
-<p>The message is: {{ .message }}</p>
+
+<header class="">
+  <div class="flex flex-col items-center mt-[10rem] mb-[5rem] gap-y-8">
+    <h1 class="font-bold text-6xl">Hi👋!</h1>
+    <p class="text-2xl">
+      I'm <b>Rajab</b>, a 17-year-old programmer from India 🇮🇳
+    </p>
+  </div>
+</header>
+
+<main class="flex flex-col items-center">
+  <section class="w-[80%]">
+    <h1 class="text-4xl font-bold">Here are my blogs</h1>
+    <div class="flex flex-col py-6">
+      {{range .posts}}
+      <div class="p-3">
+        <a href="{{ .Slug }}" class="hover:underline">
+          <h1 class="text-3xl">{{ .Title }}</h1>
+        </a>
+        <p class="">{{ .Content }}</p>
+        <p class="">
+          <b>tags</b>: {{ range .Tags }}
+          <a href="/blog?tag={{.}}" class="underline">{{ . }}</a>
+          {{ end }}
+        </p>
+      </div>
+      {{ end }}
+    </div>
+  </section>
+</main>
+
 {{end}}
 <!--  -->
 {{ template "base.html" .}}
