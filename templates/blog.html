@@ -20,13 +20,29 @@
     <!-- Body goes here -->
     <main class="flex flex-col items-center">
       <section class="w-[80%]">
-        <h1 class="text-4xl font-bold">{{.post.Title}}</h1>
+        <header>
+          <h1 class="text-8xl font-bold text-center">{{.post.Title}}</h1>
+          <div class="flex flex-col items-center mt-6 text-lg">
+            <p class="">Published on {{.post.CreatedAt}}</p>
+            <p class="">
+              Written by
+              <b>
+                <i> {{.author}} </i>
+              </b>
+            </p>
+            <p class="">
+              Based on {{range .post.Tags}}
+              <a href="" class="underline">{{.}}&nbsp;</a>
+              {{end}}
+            </p>
+          </div>
+        </header>
         <div class="flex flex-col py-6 markdown-body" id="markdown-content">
           {{.post.Content }}
         </div>
       </section>
     </main>
     <!-- TAILWIND.CSS CDN -->
-    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+    <script src="https://cdn.tailwindcss.com"></script>
   </body>
 </html>

@@ -50,7 +50,9 @@ func mdToHTML(md []byte) []byte {
 
 func (BlogController) BlogHandler(ctx *gin.Context) {
 
-	obj := gin.H{}
+	obj := gin.H{
+		"author": "Rajab",
+	}
 	slug := ctx.Param("slug")
 	blogs := models.NewBlogs(db.GetMDB().BlogsCollection())
 
