@@ -1,37 +1,49 @@
-{{ define "title" }}Home{{ end }}
-<!--  -->
-{{define "body"}}
-
-<header class="">
-  <div class="flex flex-col items-center mt-[10rem] mb-[5rem] gap-y-8">
-    <h1 class="font-bold text-6xl">Hi👋!</h1>
-    <p class="text-2xl">
-      I'm <b>Rajab</b>, a 17-year-old programmer from India 🇮🇳
-    </p>
-  </div>
-</header>
-
-<main class="flex flex-col items-center">
-  <section class="w-[80%]">
-    <h1 class="text-4xl font-bold">Here are my blogs</h1>
-    <div class="flex flex-col py-6">
-      {{range .posts}}
-      <div class="p-3">
-        <a href="{{ .Slug }}" class="hover:underline">
-          <h1 class="text-3xl">{{ .Title }}</h1>
-        </a>
-        <p class="">{{ .Content }}</p>
-        <p class="">
-          <b>tags</b>: {{ range .Tags }}
-          <a href="/blog?tag={{.}}" class="underline">{{ . }}</a>
-          {{ end }}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home</title>
+    <!-- HTMX CDN -->
+    <script
+      src="https://unpkg.com/htmx.org@1.9.8"
+      integrity="sha384-rgjA7mptc2ETQqXoYC3/zJvkU7K/aP44Y+z7xQuJiVnB/422P/Ak+F/AqFR7E4Wr"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
+  </head>
+  <body>
+    <!-- Body goes here -->
+    <header class="">
+      <div class="flex flex-col items-center mt-[10rem] mb-[5rem] gap-y-8">
+        <h1 class="font-bold text-6xl">Hi👋!</h1>
+        <p class="text-2xl">
+          I'm <b>Rajab</b>, a 17-year-old programmer from India 🇮🇳
         </p>
       </div>
-      {{ end }}
-    </div>
-  </section>
-</main>
+    </header>
 
-{{end}}
-<!--  -->
-{{ template "base.html" .}}
+    <main class="flex flex-col items-center">
+      <section class="w-[80%]">
+        <h1 class="text-4xl font-bold">Here are my blogs</h1>
+        <div class="flex flex-col py-6">
+          {{range .posts}}
+          <div class="p-3">
+            <a href="{{ .Slug }}" class="hover:underline">
+              <h1 class="text-3xl">{{ .Title }}</h1>
+            </a>
+            <p class="">{{ .Content }}</p>
+            <p class="">
+              <b>tags</b>: {{ range .Tags }}
+              <a href="/blog?tag={{.}}" class="underline">{{ . }}</a>
+              {{ end }}
+            </p>
+          </div>
+          {{ end }}
+        </div>
+      </section>
+    </main>
+    <!-- TAILWIND.CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+  </body>
+</html>
