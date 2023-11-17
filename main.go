@@ -1,32 +1,17 @@
 package main
 
 import (
-	"net/http"
-
+	"github.com/Muhammed-Rajab/go-blog/pkg/routers"
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
 
-	// Root router for the application
-	router := gin.Default()
-	router.LoadHTMLGlob("templates/*.html")
+	engine := gin.Default()
+	engine.LoadHTMLGlob("templates/*.html")
 
-	// Routing starts here
-	blog := router.Group("/blog")
-	{
-		blog.GET("/", func(ctx *gin.Context) {
-			ctx.JSON(http.StatusOK, gin.H{
-				"message": "welcome to blog!",
-			})
-		})
-	}
+	root := engine.Group("/")
+	routers.BlogRouter(root)
 
-	router.GET("/", func(ctx *gin.Context) {
-		ctx.HTML(http.StatusOK, "index.html", gin.H{
-			"message": "hello!",
-		})
-	})
-
-	router.Run(":8000")
+	engine.Run(":8000")
 }
