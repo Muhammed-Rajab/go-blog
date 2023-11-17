@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"log"
 	"net/http"
 
 	"github.com/Muhammed-Rajab/go-blog/pkg/db"
@@ -28,9 +27,6 @@ func (BlogController) HomeHandler(ctx *gin.Context) {
 	} else {
 		obj["posts"] = posts
 	}
-
-	log.Print(posts)
-
 	ctx.HTML(http.StatusOK, "index.html", obj)
 }
 
@@ -47,8 +43,5 @@ func (BlogController) BlogHandler(ctx *gin.Context) {
 	} else {
 		obj["post"] = post
 	}
-
-	log.Print(post)
-	obj["message"] = "himi lady"
 	ctx.HTML(http.StatusOK, "blog.html", obj)
 }
