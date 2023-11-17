@@ -9,10 +9,11 @@ import (
 func main() {
 
 	// Root router for the application
-	root := gin.Default()
+	router := gin.Default()
+	router.LoadHTMLGlob("templates/*.html")
 
 	// Routing starts here
-	blog := root.Group("/blog")
+	blog := router.Group("/blog")
 	{
 		blog.GET("/", func(ctx *gin.Context) {
 			ctx.JSON(http.StatusOK, gin.H{
@@ -21,11 +22,11 @@ func main() {
 		})
 	}
 
-	root.GET("/", func(ctx *gin.Context) {
-		ctx.JSON(http.StatusOK, gin.H{
-			"message": "hello world!",
+	router.GET("/", func(ctx *gin.Context) {
+		ctx.HTML(http.StatusOK, "index.html", gin.H{
+			"message": "hello!",
 		})
 	})
 
-	root.Run(":8000")
+	router.Run(":8000")
 }
