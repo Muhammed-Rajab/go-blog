@@ -4,14 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Home</title>
-    <!-- HTMX CDN -->
-    <script
-      src="https://unpkg.com/htmx.org@1.9.8"
-      integrity="sha384-rgjA7mptc2ETQqXoYC3/zJvkU7K/aP44Y+z7xQuJiVnB/422P/Ak+F/AqFR7E4Wr"
-      crossorigin="anonymous"
-    ></script>
-    <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
-
     <!-- My own styles -->
     <link rel="stylesheet" href="/public/stylesheets/index.css" />
   </head>
@@ -43,7 +35,7 @@
       </div>
     </header>
 
-    <main class="flex flex-col items-center">
+    <main class="flex flex-col items-center pb-8">
       <section class="w-[80%]">
         <h1 class="text-4xl font-bold">Here are my blogs</h1>
         <div class="flex flex-col py-6">
@@ -65,7 +57,19 @@
           {{ end }}
         </div>
       </section>
+      <section class="flex items-center">
+        <p class="">
+          [<a href="" class="hover:italic hover:font-bold">Prev</a>]
+        </p>
+        <p class="">
+          [<a href="" class="hover:italic hover:font-bold">Next</a>]
+        </p>
+
+        <!-- Script to handle pagination -->
+        <script></script>
+      </section>
     </main>
+
     <!-- TAILWIND.CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
   </body>
