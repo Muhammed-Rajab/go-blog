@@ -9,7 +9,9 @@
   </head>
   <body class="">
     <!-- Body goes here -->
-    <header class="mt-[10rem] mb-[5rem] flex flex-col items-center">
+    <header
+      class="mt-[10rem] mb-[3rem] sm:mb-[5rem] flex flex-col items-center"
+    >
       <div class="flex flex-col items-center gap-y-4 sm:gap-y-8">
         <p class="text-md sm:text-lg">¡Hola👋!</p>
         <h1 class="font-bold text-5xl sm:text-6xl">I'm Rajab.</h1>
@@ -65,10 +67,12 @@
 
     <main class="flex flex-col items-center pb-8">
       <section class="w-[90%] sm:w-[80%] xl:w-fit">
-        <h1 class="text-2xl sm:text-4xl font-bold">Here are my blogs</h1>
+        <h1 class="text-2xl sm:text-4xl font-bold text-center sm:text-left">
+          Here are my blogs
+        </h1>
         <div class="flex flex-col py-6 gap-y-6">
           {{if gt (len .posts) 0}} {{range .posts}}
-          <div class="p-5 flex flex-col gap-y-2 bg-[#fafafa] rounded">
+          <div class="p-5 flex flex-col gap-y-2 bg-[#fff] rounded">
             <a
               href="/blog/{{ .Slug }}"
               class="sm:hover:underline italic sm:hover:font-bold font-bold sm:font-normal"
@@ -82,6 +86,7 @@
               {{ end }}
             </p>
           </div>
+          <hr />
           {{ end }} {{else}}
           <div class="text-center my-10">
             <p class="">
