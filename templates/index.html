@@ -35,6 +35,35 @@
           >]
         </p>
       </div>
+      <div class="mt-8 w-full flex flex-col items-center">
+        <input
+          type="text"
+          class="border-2 p-4 rounded w-[95%] sm:w-[512px]"
+          placeholder="Search for blogs"
+          id="search-box"
+        />
+        <button
+          class="btn bg-blue-500 text-white px-4 py-2 rounded mt-4"
+          id="search-btn"
+        >
+          Search
+        </button>
+
+        <script type="module">
+          const searchBox = document.querySelector("#search-box");
+          const searchBtn = document.querySelector("#search-btn");
+
+          searchBox.value =
+            new URLSearchParams(window.location.search).get("search") || "";
+
+          searchBtn.addEventListener("click", () => {
+            // if (searchBox.value == "") return;
+            window.location.assign(
+              `/blog?search=${encodeURIComponent(searchBox.value)}`
+            );
+          });
+        </script>
+      </div>
     </header>
 
     <main class="flex flex-col items-center pb-8">
@@ -86,7 +115,7 @@
           >]
         </p>
         <!-- Script to handle pagination -->
-        <script>
+        <script type="module">
           const prevPageLink = document.querySelector("#prev-page-link");
           const nextPageLink = document.querySelector("#next-page-link");
 
@@ -94,15 +123,22 @@
           let pageNo = Number(
             new URLSearchParams(window.location.search).get("page")
           );
+          let search = new URLSearchParams(window.location.search).get(
+            "search"
+          );
 
           if (!Number.isInteger(pageNo) || pageNo < 1) {
             pageNo = 1;
           }
 
-          nextPageLink.href = `/blog?page=${pageNo + 1}`;
+          nextPageLink.href = `/blog?page=${
+            pageNo + 1
+          }&search=${encodeURIComponent(search)}`;
           prevPageLink.href = `javascript: void(0);`;
           if (pageNo > 1) {
-            prevPageLink.href = `/blog?page=${pageNo - 1}`;
+            prevPageLink.href = `/blog?page=${
+              pageNo - 1
+            }&search=${encodeURIComponent(search)}`;
           }
         </script>
       </section>
