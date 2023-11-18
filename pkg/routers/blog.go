@@ -11,7 +11,7 @@ func BlogRouter(root *gin.RouterGroup) *gin.RouterGroup {
 	controller := controllers.NewBlogController()
 	{
 
-		router.GET("/", controller.HomeHandler)
+		router.GET("", controller.HomeHandler)
 		router.GET("/:slug", controller.BlogHandler)
 	}
 

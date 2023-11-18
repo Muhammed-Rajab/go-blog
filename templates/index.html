@@ -59,14 +59,35 @@
       </section>
       <section class="flex items-center">
         <p class="">
-          [<a href="" class="hover:italic hover:font-bold">Prev</a>]
+          [<a href="" id="prev-page-link" class="hover:italic hover:font-bold"
+            >Prev</a
+          >]
         </p>
         <p class="">
-          [<a href="" class="hover:italic hover:font-bold">Next</a>]
+          [<a href="" id="next-page-link" class="hover:italic hover:font-bold"
+            >Next</a
+          >]
         </p>
-
         <!-- Script to handle pagination -->
-        <script></script>
+        <script>
+          const prevPageLink = document.querySelector("#prev-page-link");
+          const nextPageLink = document.querySelector("#next-page-link");
+
+          // Get current page number (default=1)
+          let pageNo = Number(
+            new URLSearchParams(window.location.search).get("page")
+          );
+
+          if (!Number.isInteger(pageNo)) {
+            pageNo = 1;
+          }
+
+          nextPageLink.href = `/blog?page=${pageNo + 1}`;
+          prevPageLink.href = `javascript: void(0);`;
+          if (pageNo > 1) {
+            prevPageLink.href = `/blog?page=${pageNo - 1}`;
+          }
+        </script>
       </section>
     </main>
 
