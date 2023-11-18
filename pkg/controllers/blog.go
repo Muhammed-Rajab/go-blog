@@ -59,7 +59,6 @@ func (BlogController) BlogHandler(ctx *gin.Context) {
 
 	post, err := blogs.FindBlogBySlug(slug)
 	templates, _ := template.New("custom-blog").Funcs(utils.GetTemplateFuncsMap()).ParseGlob("templates/*")
-	// templates := template.Must(template.ParseFiles("templates/blog.html"))
 
 	if err != nil {
 		obj["errors"] = err

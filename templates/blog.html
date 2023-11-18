@@ -11,35 +11,58 @@
       crossorigin="anonymous"
     ></script>
     <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
+    <!-- Github Markdown CDN -->
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/github-markdown-css/github-markdown.min.css"
     />
+    <!-- Space Mono font CDN -->
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+      body {
+        font-family: "Space Mono", monospace;
+      }
+    </style>
+    <!-- Highlight.js CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/shades-of-purple.css"
+    />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script>
+
+    <script>
+      hljs.highlightAll();
+    </script>
   </head>
   <body>
     <!-- Body goes here -->
     <main class="flex flex-col items-center">
       <section class="w-[80%]">
-        <header class="mt-48">
+        <header class="mt-48 flex flex-col items-center">
+          <p class="text-lg my-6">
+            Written by
+            <b>
+              <i> {{.author}} </i>
+            </b>
+          </p>
           <h1 class="text-7xl font-bold text-center">{{.post.Title}}</h1>
-          <div class="flex flex-col items-center mt-6 text-lg">
-            <p class="">Published on {{.post.CreatedAt | formatAsDate}}</p>
+          <div class="mt-8 text-lg">
             <p class="">
-              Written by
-              <b>
-                <i> {{.author}} </i>
-              </b>
-            </p>
-            <p class="">
-              Based on {{range .post.Tags}}
-              <a href="" class="underline">{{.}}&nbsp;</a>
-              {{end}}
+              Published on <b>{{.post.CreatedAt | formatAsDate}}</b>
             </p>
           </div>
         </header>
         <div class="flex flex-col py-6 markdown-body" id="markdown-content">
           {{.post.Content }}
         </div>
+        <p class="">
+          Based on {{range .post.Tags}}
+          <a href="" class="underline">{{.}}&nbsp;</a>
+          {{end}}
+        </p>
       </section>
     </main>
     <!-- TAILWIND.CSS CDN -->
