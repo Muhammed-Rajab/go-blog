@@ -6,6 +6,7 @@ import (
 
 	"github.com/Muhammed-Rajab/go-blog/pkg/db"
 	"github.com/Muhammed-Rajab/go-blog/pkg/models"
+	"github.com/Muhammed-Rajab/go-blog/pkg/utils"
 	"github.com/gin-gonic/gin"
 	"github.com/gomarkdown/markdown"
 	"github.com/gomarkdown/markdown/html"
@@ -57,7 +58,8 @@ func (BlogController) BlogHandler(ctx *gin.Context) {
 	blogs := models.NewBlogs(db.GetMDB().BlogsCollection())
 
 	post, err := blogs.FindBlogBySlug(slug)
-	templates := template.Must(template.ParseFiles("templates/blog.html"))
+	templates, _ := template.New("custom-blog").Funcs(utils.GetTemplateFuncsMap()).ParseGlob("templates/*")
+	// templates := template.Must(template.ParseFiles("templates/blog.html"))
 
 	if err != nil {
 		obj["errors"] = err

@@ -1,10 +1,9 @@
 package main
 
 import (
-	"text/template"
-
 	"github.com/Muhammed-Rajab/go-blog/pkg/db"
 	"github.com/Muhammed-Rajab/go-blog/pkg/routers"
+	"github.com/Muhammed-Rajab/go-blog/pkg/utils"
 	"github.com/gin-gonic/gin"
 )
 
@@ -14,7 +13,7 @@ func main() {
 	db.GetMDB().Connect()
 
 	engine := gin.Default()
-	engine.SetFuncMap(template.FuncMap{})
+	engine.SetFuncMap(utils.GetTemplateFuncsMap())
 	engine.LoadHTMLGlob("templates/*.html")
 
 	root := engine.Group("/")
