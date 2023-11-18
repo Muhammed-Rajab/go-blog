@@ -22,11 +22,11 @@ func main() {
 
 	engine.Run(":8000")
 
-	// 	blogs := models.NewBlogs(db.GetMDB().BlogsCollection())
-	// 	post := models.BlogModel{
-	// 		Title: "Far, but close.",
-	// 		Desc:  "How can someone be so far away from you physically, yet so close to you spiritually?",
-	// 		Content: `<p style="text-align: center;">
+	// blogs := models.NewBlogs(db.GetMDB().BlogsCollection())
+	// post := models.BlogModel{
+	// 	Title: "Far, but close.",
+	// 	Desc:  "How can someone be so far away from you physically, yet so close to you spiritually?",
+	// 	Content: `<p style="text-align: center;">
 	// Amidst of all the chaos and fun,<br>
 	// I could only think of you.<br>
 	// It never fails to intrigue me,<br>
@@ -42,10 +42,10 @@ func main() {
 	// Four days just seem trivial, but are they?
 	// I guess not.<br>
 	// </p>`,
-	// 		Tags: []string{"love", "distance", "relationship"},
-	// 	}
+	// 	Tags: []string{"love", "distance", "relationship"},
+	// }
 
-	//	if err := blogs.AddBlog(post); err != nil {
-	//		log.Fatal(err)
-	//	}
+	// if err := blogs.AddBlog(post); err != nil {
+	// 	log.Fatal(err)
+	// }
 }
