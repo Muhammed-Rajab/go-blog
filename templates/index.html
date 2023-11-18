@@ -35,7 +35,7 @@
             <a href="{{ .Slug }}" class="hover:underline">
               <h1 class="text-3xl">{{ .Title }}</h1>
             </a>
-            <p class="">{{ .Content }}</p>
+            <p class="">{{ .Desc }}</p>
             <p class="">
               <b>tags</b>: {{ range .Tags }}
               <a href="/blog?tag={{.}}" class="underline">{{ . }}</a>

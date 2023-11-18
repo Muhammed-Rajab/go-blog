@@ -17,6 +17,7 @@ import (
 type BlogModel struct {
 	ID        primitive.ObjectID `bson:"_id,omitempty" validate:"omitempty"`
 	Title     string             `bson:"title" validate:"required"`
+	Desc      string             `bson:"description" validate:""`
 	Content   string             `bson:"content" validate:""`
 	Tags      []string           `bson:"tags" validate:""`
 	CreatedAt time.Time          `bson:"created_at" validate:""`
@@ -27,6 +28,7 @@ type BlogModel struct {
 func (b *BlogModel) String() string {
 	return fmt.Sprintf(`
 Title: %s
+Desc: %s
 Created At: %s
 Published: %t
 Tags: %v
@@ -37,7 +39,7 @@ Tags: %v
 ================
 
 
-`, b.Title, b.CreatedAt, b.Published, b.Tags, b.Content)
+`, b.Title, b.Desc, b.CreatedAt, b.Published, b.Tags, b.Content)
 }
 
 type Blogs struct {
@@ -214,6 +216,7 @@ func (b *Blogs) UpdateBlogByID(id string, body BlogModel) error {
 	updatedBlog.Content = body.Content
 	updatedBlog.Tags = body.Tags
 	updatedBlog.Title = body.Title
+	updatedBlog.Desc = body.Desc
 	if updatedBlog.Title != old.Title {
 		updatedBlog.Slug = b.CreateSlug(updatedBlog.Title)
 	}
