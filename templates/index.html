@@ -17,11 +17,28 @@
   </head>
   <body>
     <!-- Body goes here -->
-    <header class="">
-      <div class="flex flex-col items-center mt-[10rem] mb-[5rem] gap-y-8">
-        <h1 class="font-bold text-6xl">Hi👋!</h1>
-        <p class="text-2xl">
-          I'm <b>Rajab</b>, a 17-year-old programmer from India 🇮🇳
+    <header class="mt-[10rem] mb-[5rem] flex flex-col items-center">
+      <div class="flex flex-col items-center gap-y-8">
+        <p class="">¡Hola👋!</p>
+        <h1 class="font-bold text-6xl">I'm Rajab.</h1>
+        <p class="text-2xl">I love Math, Programming and Poetry!</p>
+      </div>
+      <!-- Links -->
+      <div class="flex mt-4">
+        <p class="">
+          [<a href="" class="hover:italic hover:text-blue-500 text-blue-400"
+            >Portfolio</a
+          >]
+        </p>
+        <p class="">
+          [<a href="" class="hover:italic hover:text-blue-500 text-blue-400"
+            >Github</a
+          >]
+        </p>
+        <p class="">
+          [<a href="" class="hover:italic hover:text-blue-500 text-blue-400"
+            >Resume</a
+          >]
         </p>
       </div>
     </header>
@@ -32,13 +49,16 @@
         <div class="flex flex-col py-6">
           {{range .posts}}
           <div class="p-3">
-            <a href="{{ .Slug }}" class="hover:underline">
+            <a
+              href="{{ .Slug }}"
+              class="hover:underline hover:italic hover:font-bold"
+            >
               <h1 class="text-3xl">{{ .Title }}</h1>
             </a>
             <p class="">{{ .Desc }}</p>
             <p class="">
               <b>tags</b>: {{ range .Tags }}
-              <a href="/blog?tag={{.}}" class="underline">{{ . }}</a>
+              <a href="/blog?tag={{.}}" class="text-blue-500">{{ . }}</a>
               {{ end }}
             </p>
           </div>
