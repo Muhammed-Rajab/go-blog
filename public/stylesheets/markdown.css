@@ -19,3 +19,7 @@
   /* add gradient color */
   /* color: red; */
 }
+
+.markdown-body img {
+  border-radius: 10px !important;
+}
