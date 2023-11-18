@@ -10,13 +10,15 @@
   <body>
     <!-- Body goes here -->
     <header class="mt-[10rem] mb-[5rem] flex flex-col items-center">
-      <div class="flex flex-col items-center gap-y-8">
-        <p class="">¡Hola👋!</p>
-        <h1 class="font-bold text-6xl">I'm Rajab.</h1>
-        <p class="text-2xl">I love Math, Programming and Poetry!</p>
+      <div class="flex flex-col items-center gap-y-4 sm:gap-y-8">
+        <p class="text-md sm:text-lg">¡Hola👋!</p>
+        <h1 class="font-bold text-5xl sm:text-6xl">I'm Rajab.</h1>
+        <p class="text-lg sm:text-2xl text-center">
+          I love Math, Programming and Poetry!
+        </p>
       </div>
       <!-- Links -->
-      <div class="flex mt-4">
+      <div class="flex mt-4 text-sm sm:text-lg">
         <p class="">
           [🌐<a href="" class="hover:italic hover:text-blue-500 text-blue-400"
             >Portfolio</a
@@ -36,26 +38,31 @@
     </header>
 
     <main class="flex flex-col items-center pb-8">
-      <section class="w-[80%]">
-        <h1 class="text-4xl font-bold">Here are my blogs</h1>
+      <section class="w-[90%] sm:w-[80%] xl:w-fit">
+        <h1 class="text-2xl sm:text-4xl font-bold">Here are my blogs</h1>
         <div class="flex flex-col py-6">
           {{if gt (len .posts) 0}} {{range .posts}}
-          <div class="p-3">
+          <div class="p-3 flex flex-col gap-y-2">
             <a
               href="/blog/{{ .Slug }}"
               class="hover:underline hover:italic hover:font-bold"
             >
-              <h1 class="text-3xl">{{ .Title }}</h1>
+              <h1 class="text-xl sm:text-3xl">{{ .Title }}</h1>
             </a>
-            <p class="">{{ .Desc }}</p>
-            <p class="">
+            <p class="text-sm sm:text-lg">{{ .Desc }}</p>
+            <p class="text-sm">
               <b>tags</b>: {{ range .Tags }}
               <a href="/blog?tag={{.}}" class="text-blue-500">{{ . }}</a>
               {{ end }}
             </p>
           </div>
           {{ end }} {{else}}
-          <h1>go home</h1>
+          <div class="text-center my-10">
+            <p class="">
+              You've astrayed way too far. Go
+              <a href="/blog" class="hover:italic font-bold">Home</a>
+            </p>
+          </div>
           {{end}}
         </div>
       </section>
@@ -63,6 +70,14 @@
         <p class="">
           [<a href="" id="prev-page-link" class="hover:italic hover:font-bold"
             >Prev</a
+          >]
+        </p>
+        <p class="">
+          [<a
+            href="/blog?page=1"
+            id="prev-page-link"
+            class="hover:italic hover:font-bold"
+            >Home</a
           >]
         </p>
         <p class="">
