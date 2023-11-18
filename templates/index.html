@@ -46,7 +46,7 @@
           class="btn bg-blue-500 text-white px-4 py-2 rounded mt-4"
           id="search-btn"
         >
-          Search
+          Explore
         </button>
 
         <script type="module">
@@ -69,12 +69,12 @@
     <main class="flex flex-col items-center pb-8">
       <section class="w-[90%] sm:w-[80%] xl:w-fit">
         <h1 class="text-2xl sm:text-4xl font-bold">Here are my blogs</h1>
-        <div class="flex flex-col py-6">
+        <div class="flex flex-col py-6 gap-y-6">
           {{if gt (len .posts) 0}} {{range .posts}}
-          <div class="p-3 flex flex-col gap-y-2">
+          <div class="p-5 flex flex-col gap-y-2 bg-[#fafafa] rounded">
             <a
               href="/blog/{{ .Slug }}"
-              class="hover:underline italic hover:font-bold"
+              class="sm:hover:underline italic sm:hover:font-bold font-bold sm:font-normal"
             >
               <h1 class="text-xl sm:text-3xl">{{ .Title }}</h1>
             </a>
