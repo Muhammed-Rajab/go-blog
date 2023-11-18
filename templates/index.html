@@ -35,15 +35,20 @@
           >]
         </p>
       </div>
-      <div class="mt-8 w-full flex flex-col items-center">
+      <form
+        class="mt-8 w-full flex flex-col items-center"
+        action="/blog"
+        method="get"
+      >
         <input
           type="text"
-          class="border-2 p-4 rounded w-[95%] sm:w-[512px]"
+          class="border-2 p-4 rounded w-[95%] sm:w-[512px] outline-none"
           placeholder="Search for blogs"
           id="search-box"
+          name="search"
         />
         <button
-          class="btn bg-blue-500 text-white px-4 py-2 rounded mt-4"
+          class="btn text-white px-4 py-2 rounded mt-4 bg-black font-bold"
           id="search-btn"
         >
           Explore
@@ -51,19 +56,11 @@
 
         <script type="module">
           const searchBox = document.querySelector("#search-box");
-          const searchBtn = document.querySelector("#search-btn");
 
           searchBox.value =
             new URLSearchParams(window.location.search).get("search") || "";
-
-          searchBtn.addEventListener("click", () => {
-            // if (searchBox.value == "") return;
-            window.location.assign(
-              `/blog?search=${encodeURIComponent(searchBox.value)}`
-            );
-          });
         </script>
-      </div>
+      </form>
     </header>
 
     <main class="flex flex-col items-center pb-8">
