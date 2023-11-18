@@ -31,7 +31,7 @@
   </head>
   <body>
     <!-- Body goes here -->
-    <main class="flex flex-col items-center">
+    <main class="flex flex-col items-center pb-10">
       <section class="w-[90%] sm:w-[80%] lg:w-[80%]">
         <header class="mt-24 sm:mt-48 flex flex-col items-center">
           <p class="text-md sm:text-lg my-3 sm:my-6 text-center w-fit">
@@ -55,10 +55,19 @@
         >
           {{.post.Content }}
         </div>
-        <p class="">
-          Based on {{range .post.Tags}}
-          <a href="" class="underline">{{.}}&nbsp;</a>
-          {{end}}
+        <p class="w-full flex flex-col items-center justify-center">
+          <span>
+            🏷️Tags: {{range .post.Tags}}
+            <a href="" class="underline">{{.}}&nbsp;</a>
+            {{end}}
+          </span>
+          <span class="mt-4"
+            >[<a
+              href="/blog?post=1"
+              class="hover:italic hover:font-bold text-md"
+              >Home</a
+            >]</span
+          >
         </p>
       </section>
     </main>
