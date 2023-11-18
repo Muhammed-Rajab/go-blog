@@ -123,9 +123,8 @@
           let pageNo = Number(
             new URLSearchParams(window.location.search).get("page")
           );
-          let search = new URLSearchParams(window.location.search).get(
-            "search"
-          );
+          let search =
+            new URLSearchParams(window.location.search).get("search") || "";
 
           if (!Number.isInteger(pageNo) || pageNo < 1) {
             pageNo = 1;

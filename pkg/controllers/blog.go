@@ -27,12 +27,19 @@ func (BlogController) HomeHandler(ctx *gin.Context) {
 	blogs := models.NewBlogs(db.GetMDB().BlogsCollection())
 
 	pageNo := ctx.Query("page")
+	search := ctx.Query("search")
+
 	page, err := strconv.ParseUint(pageNo, 10, 64)
 	if err != nil {
 		page = 1
 	}
 
-	posts, err := blogs.FindBlogs(bson.M{}, int(page), 10)
+	posts, err := blogs.FindBlogs(bson.M{
+		"title": bson.M{
+			"$regex":   search,
+			"$options": "i",
+		},
+	}, int(page), 10)
 
 	if err != nil {
 		obj["errors"] = err
