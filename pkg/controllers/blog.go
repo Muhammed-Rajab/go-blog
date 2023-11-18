@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"net/http"
+	"strconv"
 	"text/template"
 
 	"github.com/Muhammed-Rajab/go-blog/pkg/db"
@@ -25,7 +26,13 @@ func (BlogController) HomeHandler(ctx *gin.Context) {
 	obj := gin.H{}
 	blogs := models.NewBlogs(db.GetMDB().BlogsCollection())
 
-	posts, err := blogs.FindBlogs(bson.M{}, 1, 10)
+	pageNo := ctx.Query("page")
+	page, err := strconv.ParseUint(pageNo, 10, 64)
+	if err != nil {
+		page = 1
+	}
+
+	posts, err := blogs.FindBlogs(bson.M{}, int(page), 10)
 
 	if err != nil {
 		obj["errors"] = err

@@ -78,7 +78,7 @@
             new URLSearchParams(window.location.search).get("page")
           );
 
-          if (!Number.isInteger(pageNo)) {
+          if (!Number.isInteger(pageNo) || pageNo < 1) {
             pageNo = 1;
           }
 
