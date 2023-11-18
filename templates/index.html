@@ -7,7 +7,7 @@
     <!-- My own styles -->
     <link rel="stylesheet" href="/public/stylesheets/index.css" />
   </head>
-  <body>
+  <body class="">
     <!-- Body goes here -->
     <header class="mt-[10rem] mb-[5rem] flex flex-col items-center">
       <div class="flex flex-col items-center gap-y-4 sm:gap-y-8">
@@ -145,5 +145,16 @@
 
     <!-- TAILWIND.CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              bg: "#FFE5E5",
+            },
+          },
+        },
+      };
+    </script>
   </body>
 </html>
