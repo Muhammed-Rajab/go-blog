@@ -193,7 +193,20 @@
           <h1 class="text-2xl sm:text-4xl font-bold text-center sm:text-left">
             Here Are Your Images
           </h1>
-          <div class="flex flex-col py-6 gap-y-6"></div>
+          <div class="flex flex-wrap py-6 gap-y-6">
+            {{if gt (len .images) 0}} {{range .images}}
+            <div class="">
+              <img
+                src="/{{.Location}}"
+                alt="{{.Caption}}"
+                class="h-[280px] w-fit images"
+              />
+            </div>
+            {{end}} {{else}}
+            <h1 class="">no image to be shown</h1>
+            {{end}}
+            <!-- Copy the image's link to clipboard on click -->
+          </div>
         </div>
       </section>
       <section class="flex items-center">
@@ -204,7 +217,7 @@
         </p>
         <p class="">
           [<a
-            href="/blog/dashboard?page=1"
+            href="/blog/dashboard/images?page=1"
             id="prev-page-link"
             class="hover:italic hover:font-bold"
             >Home</a
@@ -231,12 +244,12 @@
             pageNo = 1;
           }
 
-          nextPageLink.href = `/blog/dashboard?page=${pageNo + 1}${
+          nextPageLink.href = `/blog/dashboard/images?page=${pageNo + 1}${
             search === "" ? "" : `&search=${encodeURIComponent(search)}`
           }`;
           prevPageLink.href = `javascript: void(0);`;
           if (pageNo > 1) {
-            prevPageLink.href = `/blog/dashboard?page=${pageNo - 1}${
+            prevPageLink.href = `/blog/dashboard/images?page=${pageNo - 1}${
               search === "" ? "" : `&search=${encodeURIComponent(search)}`
             }`;
           }

@@ -385,7 +385,29 @@ func (BlogController) LogoutDashboard(ctx *gin.Context) {
 }
 
 func (BlogController) ImagesHandler(ctx *gin.Context) {
-	var obj gin.H
+	obj := gin.H{}
+	images := models.NewImages(db.GetMDB().ImagesCollection())
+
+	pageNo := ctx.Query("page")
+	search := ctx.Query("search")
+
+	page, err := strconv.ParseUint(pageNo, 10, 64)
+	if err != nil {
+		page = 1
+	}
+
+	posts, err := images.FindImages(bson.M{
+		"caption": bson.M{
+			"$regex":   search,
+			"$options": "i",
+		},
+	}, int(page), 10)
+
+	if err != nil {
+		obj["error"] = err
+	} else {
+		obj["images"] = posts
+	}
 	ctx.HTML(http.StatusOK, "images.html", obj)
 }
 
