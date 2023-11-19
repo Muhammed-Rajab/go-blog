@@ -192,5 +192,8 @@ func (BlogController) AddBlogHandler(ctx *gin.Context) {
 }
 
 func (BlogController) AddBlog(ctx *gin.Context) {
+	// var obj gin.H
 
+	// Redirect to the created blog if everything went well
+	ctx.Redirect(http.StatusSeeOther, "/blog")
 }
