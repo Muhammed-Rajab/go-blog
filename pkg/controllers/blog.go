@@ -2,7 +2,6 @@ package controllers
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 	"os"
 	"strconv"
@@ -272,8 +271,6 @@ func (BlogController) AuthDashboard(ctx *gin.Context) {
 		return
 	}
 
-	log.Print(form.Token)
-
 	// if the token is similar to the env variable,
 	// then set it as cookie
 	if form.Token == os.Getenv("BLOG_DASHBOARD_KEY") {
@@ -281,7 +278,6 @@ func (BlogController) AuthDashboard(ctx *gin.Context) {
 		ctx.Redirect(http.StatusSeeOther, "/blog/dashboard")
 		return
 	}
-	log.Print("shit didn't work")
 
 	// else render the auth page with error
 	// later....
