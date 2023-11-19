@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Blog</title>
+
+    <!-- Github Markdown CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/github-markdown-css/github-markdown.min.css"
+    />
+
+    <!-- Highlight.js CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.css"
+    />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script>
+
+    <script>
+      hljs.highlightAll();
+    </script>
+
+    <!-- My styles -->
+    <link rel="stylesheet" href="/public/stylesheets/blog.css" />
+    <link rel="stylesheet" href="/public/stylesheets/markdown.css" />
+  </head>
+  <body>
+    <!-- Body goes here -->
+    <main class="flex flex-col items-center pb-10">
+      <section class="w-[90%] sm:w-[80%] lg:w-[80%]">
+        <header class="flex flex-col w-full items-center">
+          <h1 class="font-bold text-5xl mt-24 text-center">Add A New Blog.</h1>
+          <div class="flex mt-4">
+            <p class="">
+              <span class=""
+                >[🏠<a
+                  href="/blog"
+                  class="hover:italic text-lg text-blue-400 hover:text-blue-500"
+                  >Blog Home</a
+                >]</span
+              >
+            </p>
+            <p class="">
+              <span class=""
+                >[🎛️<a
+                  href="/blog/dashboard"
+                  class="hover:italic text-lg text-blue-400 hover:text-blue-500"
+                  >Dashboard</a
+                >]</span
+              >
+            </p>
+          </div>
+        </header>
+        <form
+          action="/blog/dashboard/add"
+          method="post"
+          class="flex flex-col gap-y-4 mt-8"
+          id="add-blog-form"
+        >
+          <div class="flex flex-col gap-y-2">
+            <label for="title" class="font-bold">Title</label>
+            <input
+              id="title"
+              type="text"
+              class="border-2 rounded p-3 outline-none"
+              name="title"
+              placeholder="Your Blog Title"
+              required
+            />
+          </div>
+          <div class="flex flex-col gap-y-2">
+            <label for="description" class="font-bold">Description</label>
+            <textarea
+              id="description"
+              type="text"
+              class="border-2 rounded p-3 outline-none resize-none"
+              name="description"
+              placeholder="Describe Your Blog"
+              rows="3"
+            ></textarea>
+          </div>
+          <div class="flex flex-col gap-y-2">
+            <label for="content" class="font-bold">Content</label>
+            <textarea
+              id="content"
+              type="text"
+              class="border-2 rounded p-3 outline-none"
+              name="content"
+              placeholder="Put Your Markdown Content"
+              rows="8"
+            ></textarea>
+          </div>
+          <div class="flex gap-x-2 items-center">
+            <label for="tags" class="font-bold min-w-fit">Tags🏷️</label>
+            <input
+              id="tags"
+              type="text"
+              class="border-2 rounded p-3 outline-none w-full"
+              name="tags"
+              placeholder="Put your tags here, comma separated"
+            />
+          </div>
+          <div
+            class="flex items-center justify-between gap-x-10 mt-5 flex-wrap gap-y-5"
+          >
+            <label for="publish" class="font-bold min-w-fit"
+              ><input type="checkbox" name="publish" id="publish" /> Publish the
+              article on save</label
+            >
+            <button class="btn py-2 px-6 text-white bg-black font-bold rounded">
+              Save
+            </button>
+          </div>
+        </form>
+        <!-- Script to handle form submission -->
+        <script type="module">
+          const addBlogForm = document.querySelector("#add-blog-form");
+
+          addBlogForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+            if (confirm("Are you sure that you want to post the blog?")) {
+              this.submit();
+            }
+          });
+        </script>
+      </section>
+    </main>
+    <!-- TAILWIND.CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+  </body>
+</html>

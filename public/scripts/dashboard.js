@@ -1,7 +1,6 @@
 "use strict";
 
 const deleteBtns = document.querySelectorAll(".delete-post-btn");
-const editBtns = document.querySelectorAll(".edit-post-btn");
 const publishDraftBtns = document.querySelectorAll(".publish-draft-btn");
 
 const deletePostEventHandler = (e) => {
@@ -21,11 +20,6 @@ const deletePostEventHandler = (e) => {
         alert("failed to delete post");
       }
     });
-};
-
-const editPostEventHandler = (e) => {
-  e.preventDefault();
-  const postId = e.target.dataset.postId;
 };
 
 const publishDraftPostEventHandler = (e) => {
@@ -50,7 +44,6 @@ const publishDraftPostEventHandler = (e) => {
 deleteBtns.forEach((btn) =>
   btn.addEventListener("click", deletePostEventHandler)
 );
-editBtns.forEach((btn) => btn.addEventListener("click", editPostEventHandler));
 publishDraftBtns.forEach((btn) =>
   btn.addEventListener("click", publishDraftPostEventHandler)
 );

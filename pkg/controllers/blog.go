@@ -185,6 +185,11 @@ func (BlogController) DeleteBlog(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, obj)
 }
 
+func (BlogController) EditBlogHandler(ctx *gin.Context) {
+	var obj gin.H
+	ctx.HTML(http.StatusOK, "edit_blog.html", obj)
+}
+
 func (BlogController) EditBlog(ctx *gin.Context) {
 
 }
