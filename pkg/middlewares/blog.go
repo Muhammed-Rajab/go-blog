@@ -16,7 +16,12 @@ func NewBlogMiddlewares() BlogMiddlewares {
 func (BlogMiddlewares) CheckForDashboardKey() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 
-		key := ctx.Query("key")
+		key, err := ctx.Cookie("auth-token")
+
+		// Later, change this to rendering "Unauthorized" page
+		if err != nil {
+			ctx.Redirect(http.StatusTemporaryRedirect, "/blog")
+		}
 
 		if key == os.Getenv("BLOG_DASHBOARD_KEY") {
 			ctx.Next()
