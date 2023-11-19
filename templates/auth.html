@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard Authentication</title>
+    <!-- My own styles -->
+    <link rel="stylesheet" href="/public/stylesheets/index.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="flex justify-center min-h-screen items-center">
+    <!-- Body goes here -->
+    <header
+      class="mt-[10rem] mb-[3rem] sm:mt-0 sm:mb-[0rem] flex flex-col items-center"
+    >
+      <div class="flex flex-col items-center gap-y-4 sm:gap-y-8">
+        <!-- <p class="text-md sm:text-lg">¡Hola👋!</p> -->
+        <h1 class="font-bold text-5xl sm:text-6xl">Dashboard🎛️.</h1>
+        <p class="text-lg sm:text-2xl text-center">
+          A place to manage all blogs, easily.
+        </p>
+      </div>
+      <!-- Links -->
+      <div class="flex mt-4 text-sm sm:text-lg">
+        <p class="">
+          [🏠<a
+            href="/blog"
+            class="hover:italic hover:text-blue-500 text-blue-400"
+            >Home</a
+          >]
+        </p>
+        <p class="">
+          [🎛<a
+            href=""
+            class="hover:italic hover:text-blue-500 text-blue-400"
+            id="export-blog-link"
+            >Dashboard</a
+          >]
+        </p>
+      </div>
+      <!-- Token -->
+      <form
+        class="mt-8 w-full flex flex-col items-center"
+        action="/blog/dashboard/auth"
+        method="post"
+      >
+        <input
+          type="text"
+          class="border-2 p-4 rounded w-[95%] sm:w-[512px] outline-none"
+          placeholder="Your Authentication Token Here"
+          id="search-box"
+          name="search"
+        />
+        <button
+          class="btn text-white px-4 py-2 rounded mt-4 bg-black font-bold"
+        >
+          Authenticate
+        </button>
+      </form>
+    </header>
+  </body>
+</html>

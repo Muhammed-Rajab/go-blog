@@ -251,3 +251,12 @@ func tagsFromString(stringTag string) []string {
 	}
 	return tags
 }
+
+func (BlogController) AuthDashboardHandler(ctx *gin.Context) {
+	var obj gin.H
+	ctx.HTML(http.StatusOK, "auth.html", obj)
+}
+
+func (BlogController) AuthDashboard(ctx *gin.Context) {
+
+}
