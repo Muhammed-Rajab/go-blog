@@ -16,6 +16,7 @@ func BlogRouter(root *gin.RouterGroup) *gin.RouterGroup {
 		dashboard := router.Group("/dashboard")
 		{
 			dashboard.GET("", AuthMiddleware, controller.DashboardHandler)
+			dashboard.DELETE("/:id", AuthMiddleware, controller.DashboardHandler)
 		}
 
 		router.GET("", controller.HomeHandler)

@@ -50,10 +50,6 @@
           searchForm.addEventListener("submit", (e) => {
             e.preventDefault();
 
-            // Get current url query
-            // Set page = 1
-            // Set search to current query
-            // Keep the key and update
             const query = new URLSearchParams(window.location.search);
 
             query.set("search", searchBox.value);
@@ -71,13 +67,29 @@
     <main class="flex flex-col items-center pb-8">
       <section class="w-[90%] sm:w-[80%] 2xl:w-fit">
         <h1 class="text-2xl sm:text-4xl font-bold text-center sm:text-left">
-          Here are my blogs
+          Here are your blogs
         </h1>
         <div class="flex flex-col py-6 gap-y-6">
           {{if gt (len .posts) 0}} {{range .posts}}
           <div class="p-5 flex flex-col gap-y-2 bg-[#fff] rounded">
+            <!-- Control -->
+            <div class="">
+              <!-- Status and Creation Date -->
+              <p class="">
+                Status:
+                  {{ if .Published}}<span class="font-bold text-green-400">Published</span>{{else}}<span class="font-bold text-red-500">Drafted</span>{{end}}</span
+                >
+                |
+                <span class=""
+                  >Created At:
+                  <span class="">{{.CreatedAt | formatAsDate}}</span>
+                </span>
+              </p>
+
+            </div>
             <a
               href="/blog/{{ .Slug }}"
+              target="_blank"
               class="sm:hover:underline italic sm:hover:font-bold font-bold sm:font-normal"
             >
               <h1 class="text-xl sm:text-3xl">{{ .Title }}</h1>
@@ -88,6 +100,19 @@
               <a href="/blog?tag={{.}}" class="text-blue-500">{{ . }}</a>
               {{ end }}
             </p>
+           <!-- Buttons to modify post -->
+              <div class="">
+                <!-- Delete -->
+                <button class="delete-post-btn text-red-600 font-bold" data-post-id="{{.ID | objectid}}">[DELETE]</button>
+                <!-- Edit -->
+                <button class="edit-post-btn text-blue-500 font-bold" data-post-id="{{.ID | objectid}}">[EDIT]</button>
+                <!-- Publish/Draft toggle -->
+                {{if .Published}}
+                <button class="publish-draft-btn text-red-500 font-bold" data-post-id="{{.ID | objectid}}">[DRAFT]</button>
+                {{else}}
+                <button class="publish-draft-btn text-green-400 font-bold" data-post-id="{{.ID | objectid}}">[PUBLISH]</button>
+                {{end}}
+              </div>
           </div>
           <hr />
           {{ end }} {{else}}

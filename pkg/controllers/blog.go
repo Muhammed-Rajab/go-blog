@@ -88,5 +88,29 @@ func (BlogController) BlogHandler(ctx *gin.Context) {
 }
 
 func (BlogController) DashboardHandler(ctx *gin.Context) {
-	ctx.HTML(http.StatusOK, "dashboard.html", gin.H{})
+
+	obj := gin.H{}
+	blogs := models.NewBlogs(db.GetMDB().BlogsCollection())
+
+	pageNo := ctx.Query("page")
+	search := ctx.Query("search")
+
+	page, err := strconv.ParseUint(pageNo, 10, 64)
+	if err != nil {
+		page = 1
+	}
+
+	posts, err := blogs.FindBlogs(bson.M{
+		"title": bson.M{
+			"$regex":   search,
+			"$options": "i",
+		},
+	}, int(page), 10)
+
+	if err != nil {
+		obj["errors"] = err
+	} else {
+		obj["posts"] = posts
+	}
+	ctx.HTML(http.StatusOK, "dashboard.html", obj)
 }
