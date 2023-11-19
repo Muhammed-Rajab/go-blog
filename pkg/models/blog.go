@@ -95,22 +95,27 @@ func (b *Blogs) CreateSlug(title string) string {
 }
 
 // CREATE
-func (b *Blogs) AddBlog(blog BlogModel) error {
+func (b *Blogs) AddBlog(blog BlogModel) (primitive.ObjectID, error) {
 	validate := validator.New()
 
 	if err := validate.Struct(blog); err != nil {
-		return errors.Join(errors.New("failed to validate blog"), err)
+		return primitive.NilObjectID, errors.Join(errors.New("failed to validate blog"), err)
 	}
 
 	blog.ID = primitive.NewObjectID()
 	blog.CreatedAt = time.Now()
 	blog.Slug = b.CreateSlug(blog.Title)
 
-	if _, err := b.collection.InsertOne(context.TODO(), blog); err != nil {
-		return errors.Join(errors.New("failed to add blog to the database"), err)
+	res, err := b.collection.InsertOne(context.TODO(), blog)
+	if err != nil {
+		return primitive.NilObjectID, errors.Join(errors.New("failed to add blog to the database"), err)
 	}
 
-	return nil
+	oid, ok := res.InsertedID.(primitive.ObjectID)
+	if ok {
+		return oid, nil
+	}
+	return primitive.NilObjectID, nil
 }
 
 // DELETE

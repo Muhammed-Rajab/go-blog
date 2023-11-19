@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
@@ -199,6 +200,8 @@ func (BlogController) AddBlog(ctx *gin.Context) {
 	if err := ctx.ShouldBind(&form); err != nil {
 		obj["error"] = "Shit took a turn for the worst: " + err.Error()
 		ctx.JSON(http.StatusBadRequest, obj)
+		// pass errors to the object and show the page, later
+		// ctx.HTML(http.StatusOK, "add_blog.html", obj)
 		return
 	}
 
@@ -218,8 +221,27 @@ func (BlogController) AddBlog(ctx *gin.Context) {
 		Published: publish,
 	}
 
+	oid, err := blogs.AddBlog(blog)
+	if err != nil {
+		obj["error"] = "Shit took a turn for the worst: " + err.Error()
+		ctx.JSON(http.StatusBadRequest, obj)
+		return
+		// pass errors to the object and show the page, later
+		// ctx.HTML(http.StatusOK, "add_blog.html", obj)
+	}
+
+	// Fetch the newly saved blog from db
+	newBlog, err := blogs.FindBlogByID(oid.Hex())
+	if err != nil {
+		obj["error"] = "Shit took a turn for the worst: " + err.Error()
+		ctx.JSON(http.StatusBadRequest, obj)
+		return
+		// pass errors to the object and show the page, later
+		// ctx.HTML(http.StatusOK, "add_blog.html", obj)
+	}
+
 	// Redirect to the created blog if everything went well
-	ctx.Redirect(http.StatusSeeOther, "/blog")
+	ctx.Redirect(http.StatusSeeOther, fmt.Sprintf("/blog/%s", newBlog.Slug))
 }
 
 func tagsFromString(stringTag string) []string {

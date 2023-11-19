@@ -103,6 +103,13 @@
           const key = new URLSearchParams(window.location.search).get("key");
 
           addBlogForm.action = `/blog/dashboard/add?key=${key}`;
+
+          addBlogForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+            if (confirm("Are you sure that you want to post the blog?")) {
+              this.submit();
+            }
+          });
         </script>
       </section>
     </main>
