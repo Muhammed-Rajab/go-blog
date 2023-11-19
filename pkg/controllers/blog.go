@@ -86,3 +86,7 @@ func (BlogController) BlogHandler(ctx *gin.Context) {
 	}
 
 }
+
+func (BlogController) DashboardHandler(ctx *gin.Context) {
+	ctx.HTML(http.StatusOK, "dashboard.html", gin.H{})
+}
