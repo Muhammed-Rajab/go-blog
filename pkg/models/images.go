@@ -10,6 +10,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 type ImageModel struct {
@@ -92,4 +93,24 @@ func (i *Images) CheckImageExistsBySlug(slug string) bool {
 		return false
 	}
 	return true
+}
+
+func (i *Images) FindImages(filter bson.M, pageNo, imagesPerPage int) ([]*ImageModel, error) {
+	limit := imagesPerPage
+	skip := (pageNo - 1) * limit
+
+	var images []*ImageModel
+	options := options.Find().SetSort(bson.M{"created_at": -1}).SetSkip(int64(skip)).SetLimit(int64(limit))
+
+	cursor, err := i.collection.Find(context.TODO(), filter, options)
+	if err != nil {
+		return nil, errors.Join(errors.New("failed to find images"), err)
+	}
+	defer cursor.Close(context.TODO())
+
+	if err := cursor.All(context.TODO(), &images); err != nil {
+		return nil, errors.Join(errors.New("failed to find images"), err)
+	}
+
+	return images, nil
 }
