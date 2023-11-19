@@ -39,6 +39,7 @@ func (BlogController) HomeHandler(ctx *gin.Context) {
 			"$regex":   search,
 			"$options": "i",
 		},
+		"published": true,
 	}, int(page), 10)
 
 	if err != nil {
@@ -84,7 +85,6 @@ func (BlogController) BlogHandler(ctx *gin.Context) {
 	if err := templates.ExecuteTemplate(ctx.Writer, "blog.html", obj); err != nil {
 		ctx.String(http.StatusInternalServerError, err.Error())
 	}
-
 }
 
 func (BlogController) DashboardHandler(ctx *gin.Context) {
