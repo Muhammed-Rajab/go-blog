@@ -19,6 +19,7 @@ func BlogRouter(root *gin.RouterGroup) *gin.RouterGroup {
 
 			dashboard.GET("/auth", controller.AuthDashboardHandler)
 			dashboard.POST("/auth", controller.AuthDashboard)
+			dashboard.GET("/auth/logout", controller.AuthDashboard)
 
 			dashboard.GET("/add", AuthMiddleware, controller.AddBlogHandler)
 			dashboard.POST("/add", AuthMiddleware, controller.AddBlog)

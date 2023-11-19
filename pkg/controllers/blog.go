@@ -283,3 +283,8 @@ func (BlogController) AuthDashboard(ctx *gin.Context) {
 	// later....
 	ctx.Redirect(http.StatusSeeOther, "/blog/dashboard/auth")
 }
+
+func (BlogController) LogoutDashboard(ctx *gin.Context) {
+	ctx.SetCookie("auth-token", "", -1, "/", "localhost", false, true)
+	ctx.Redirect(http.StatusSeeOther, "/blog/dashboard/auth")
+}
