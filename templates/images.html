@@ -107,13 +107,17 @@
           <h1 class="text-2xl sm:text-4xl font-bold text-center sm:text-left">
             Upload An Image
           </h1>
+          <!-- Upload image form -->
           <form
             action=""
             method="post"
-            class="flex flex-col gap-y-4 mt-8"
-            id="imageForm"
+            class="flex flex-col gap-y-4 mt-5 mb-3"
+            id="image-form"
             enctype="multipart/form-data"
           >
+            <div class="flex flex-col gap-y-2 justify-center items-center">
+              <div id="image-preview" class="" style="max-width: 250px"></div>
+            </div>
             <div class="flex flex-col gap-y-2">
               <label for="caption" class="font-bold">Caption</label>
               <input
@@ -126,62 +130,57 @@
               />
             </div>
             <div class="flex flex-col gap-y-2">
-              <label for="image" class="font-bold">Image To Upload</label>
+              <label for="image-input" class="font-bold">Image To Upload</label>
               <input
-                id="image"
                 type="file"
-                class="border-2 rounded-full p-3 outline-none w-fit"
+                class="border-2 p-3 outline-none w-fit"
                 name="image"
-                placeholder="Your Image"
                 required
-                id="imageInput"
+                id="image-input"
                 accept="image/*"
-                onchange="previewImage(event)"
               />
             </div>
-            <div id="imagePreview"></div>
-            <div
-              class="flex items-center justify-between gap-x-10 mt-5 flex-wrap gap-y-5"
-            >
+            <div class="flex items-center justify-end gap-x-10 flex-wrap">
               <button
                 class="btn py-2 px-6 text-white bg-black font-bold rounded"
-                onclick="uploadImage()"
+                id="upload-btn"
               >
                 Upload
               </button>
             </div>
           </form>
-          <script>
-            function previewImage(event) {
+          <script type="module">
+            const imageUploadForm = document.querySelector("#image-form");
+            const imageInput = document.querySelector("#image-input");
+            const imagePreviewDiv = document.querySelector("#image-preview");
+
+            imageInput.addEventListener("change", function (event) {
               const input = event.target;
-              const preview = document.getElementById("imagePreview");
 
               if (input.files && input.files[0]) {
                 const reader = new FileReader();
 
                 reader.onload = function (e) {
-                  preview.innerHTML = `<img src="${e.target.result}" alt="Image Preview" id="previewImg" />`;
+                  imagePreviewDiv.innerHTML = `<img src="${e.target.result}" alt="Image Preview" id="previewImg" />`;
                 };
 
                 reader.readAsDataURL(input.files[0]);
               } else {
-                preview.innerHTML = "";
+                imagePreviewDiv.innerHTML = "";
               }
-            }
+            });
 
-            function uploadImage() {
-              const input = document.getElementById("imageInput");
-              const previewImg = document.getElementById("previewImg");
-
-              if (input.files && input.files[0]) {
+            imageUploadForm.addEventListener("submit", function (e) {
+              e.preventDefault();
+              if (imageInput.files && imageInput.files[0]) {
                 // Perform the image upload logic here
                 // You can use FormData to send the file to the server
                 // For this example, let's just display an alert
-                alert("Image uploaded!");
+                this.submit();
               } else {
                 alert("Please choose an image to upload.");
               }
-            }
+            });
           </script>
         </div>
         <div class="">
