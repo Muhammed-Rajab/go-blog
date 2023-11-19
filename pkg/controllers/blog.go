@@ -2,8 +2,10 @@ package controllers
 
 import (
 	"fmt"
+	"io"
 	"net/http"
 	"os"
+	"path/filepath"
 	"strconv"
 	"strings"
 	"text/template"
@@ -376,6 +378,45 @@ func (BlogController) ImagesHandler(ctx *gin.Context) {
 }
 
 func (BlogController) UploadImages(ctx *gin.Context) {
-	var obj gin.H
-	ctx.HTML(http.StatusOK, "images.html", obj)
+
+	err := ctx.Request.ParseMultipartForm(10 << 20) // 10 MB limit
+	if err != nil {
+		ctx.String(http.StatusBadRequest, fmt.Sprintf("Error parsing form: %s", err))
+		return
+	}
+
+	caption := ctx.Request.PostFormValue("caption")
+	if caption == "" {
+		// send error as we can't have empty captions
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"error": "empty caption",
+		})
+		return
+	}
+
+	file, header, err := ctx.Request.FormFile("file")
+	if err != nil {
+		ctx.String(http.StatusBadRequest, fmt.Sprintf("Error retrieving file: %s", err))
+		return
+	}
+	defer file.Close()
+
+	uploadDir := "./public/uploads"
+	os.MkdirAll(uploadDir, os.ModePerm)
+
+	filename := filepath.Join(uploadDir, header.Filename)
+	out, err := os.Create(filename)
+	if err != nil {
+		ctx.String(http.StatusInternalServerError, fmt.Sprintf("Error creating file: %s", err))
+		return
+	}
+	defer out.Close()
+
+	_, err = io.Copy(out, file)
+	if err != nil {
+		ctx.String(http.StatusInternalServerError, fmt.Sprintf("Error copying file: %s", err))
+		return
+	}
+
+	ctx.String(http.StatusOK, "File uploaded successfully!")
 }
