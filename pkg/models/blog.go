@@ -104,7 +104,6 @@ func (b *Blogs) AddBlog(blog BlogModel) error {
 
 	blog.ID = primitive.NewObjectID()
 	blog.CreatedAt = time.Now()
-	blog.Published = false
 	blog.Slug = b.CreateSlug(blog.Title)
 
 	if _, err := b.collection.InsertOne(context.TODO(), blog); err != nil {

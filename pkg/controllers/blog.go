@@ -205,11 +205,17 @@ func (BlogController) AddBlog(ctx *gin.Context) {
 	blogs := models.NewBlogs(db.GetMDB().BlogsCollection())
 
 	// Create BlogModel from form
+	publish := false
+	if form.Publish == "on" {
+		publish = true
+	}
+
 	blog := models.BlogModel{
-		Title:   form.Title,
-		Desc:    form.Desc,
-		Content: form.Content,
-		Tags:    tagsFromString(form.Tags),
+		Title:     form.Title,
+		Desc:      form.Desc,
+		Content:   form.Content,
+		Tags:      tagsFromString(form.Tags),
+		Published: publish,
 	}
 
 	// Redirect to the created blog if everything went well
