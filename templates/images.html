@@ -77,6 +77,12 @@
           Search
         </button>
 
+        {{if ne .error ""}}
+        <div class="mt-5 font-bold text-red-500">
+          <span class="">Error happened: {{.error}}</span>
+        </div>
+        {{end}}
+
         <script type="module">
           const searchBox = document.querySelector("#search-box");
           const searchForm = document.querySelector("#search-form");
