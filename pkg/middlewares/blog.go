@@ -20,13 +20,17 @@ func (BlogMiddlewares) CheckForDashboardKey() gin.HandlerFunc {
 
 		// Later, change this to rendering "Unauthorized" page
 		if err != nil {
-			ctx.Redirect(http.StatusTemporaryRedirect, "/blog")
+			ctx.HTML(http.StatusUnauthorized, "unauthorized.html", gin.H{})
+			ctx.Abort()
+			return
 		}
 
 		if key == os.Getenv("BLOG_DASHBOARD_KEY") {
 			ctx.Next()
 		} else {
-			ctx.Redirect(http.StatusTemporaryRedirect, "/blog")
+			ctx.HTML(http.StatusUnauthorized, "unauthorized.html", gin.H{})
+			ctx.Abort()
+			return
 		}
 	}
 }
