@@ -2,7 +2,9 @@ package controllers
 
 import (
 	"fmt"
+	"log"
 	"net/http"
+	"os"
 	"strconv"
 	"strings"
 	"text/template"
@@ -258,5 +260,30 @@ func (BlogController) AuthDashboardHandler(ctx *gin.Context) {
 }
 
 func (BlogController) AuthDashboard(ctx *gin.Context) {
+	form := struct {
+		Token string `form:"token"`
+	}{}
 
+	if err := ctx.ShouldBind(&form); err != nil {
+		// handle the token not found stuff
+		ctx.JSON(http.StatusUnauthorized, gin.H{
+			"error": "fuck off my property, mate",
+		})
+		return
+	}
+
+	log.Print(form.Token)
+
+	// if the token is similar to the env variable,
+	// then set it as cookie
+	if form.Token == os.Getenv("BLOG_DASHBOARD_KEY") {
+		ctx.SetCookie("auth-token", form.Token, 86400, "/", "localhost", false, true)
+		ctx.Redirect(http.StatusSeeOther, "/blog/dashboard")
+		return
+	}
+	log.Print("shit didn't work")
+
+	// else render the auth page with error
+	// later....
+	ctx.Redirect(http.StatusSeeOther, "/blog/dashboard/auth")
 }
