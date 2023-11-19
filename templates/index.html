@@ -73,6 +73,21 @@
         <div class="flex flex-col py-6 gap-y-6">
           {{if gt (len .posts) 0}} {{range .posts}}
           <div class="p-5 flex flex-col gap-y-2 bg-[#fff] rounded">
+            <!-- Control -->
+            <div class="">
+              <!-- Status and Creation Date -->
+              <p class="">
+                Status:
+                  {{ if .Published}}<span class="font-bold text-green-400">Published</span>{{else}}<span class="font-bold text-red-500">Drafted</span>{{end}}</span
+                >
+                |
+                <span class=""
+                  >Created At:
+                  <span class="">{{.CreatedAt | formatAsDate}}</span>
+                </span>
+              </p>
+
+            </div>
             <a
               href="/blog/{{ .Slug }}"
               class="sm:hover:underline italic sm:hover:font-bold font-bold sm:font-normal"
