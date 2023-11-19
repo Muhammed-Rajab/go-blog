@@ -21,36 +21,40 @@
         </p>
       </div>
       <!-- Links -->
-       <div class="flex flex-wrap justify-center items-center gap-y-3 mt-4 text-sm sm:text-lg">
-        <p class="">
+      <div
+        class="flex flex-wrap justify-center items-center gap-y-3 mt-4 text-sm sm:text-lg"
+      >
+        <!-- <p class="">
           [🖼️<a href="/blog/dashboard/images/export" class="hover:italic hover:text-blue-500 text-blue-400" id="export-blog-link"
             >Upload Image</a
           >]
-        </p>
+        </p> -->
         <p class="">
           <span class=""
             >[🏠<a
               href="/blog"
-                class="hover:italic text-blue-400 hover:text-blue-500"
-                >Blog Home</a
-              >]</span
-            >
+              class="hover:italic text-blue-400 hover:text-blue-500"
+              >Blog Home</a
+            >]</span
+          >
         </p>
         <p class="">
-              <span class=""
-                >[🎛️<a
-                  href="/blog/dashboard"
-                  class="hover:italic text-lg text-blue-400 hover:text-blue-500"
-                  >Dashboard</a
-                >]</span
-              >
-            </p>
-       <p class="">
-          [📤<a href="/blog/dashboard/images/export" class="hover:italic hover:text-blue-500 text-blue-400" id="export-blog-link"
+          <span class=""
+            >[🎛️<a
+              href="/blog/dashboard"
+              class="hover:italic text-lg text-blue-400 hover:text-blue-500"
+              >Dashboard</a
+            >]</span
+          >
+        </p>
+        <p class="">
+          [📤<a
+            href="/blog/dashboard/images/export"
+            class="hover:italic hover:text-blue-500 text-blue-400"
+            id="export-blog-link"
             >Export</a
           >]
         </p>
-
       </div>
       <!-- Search -->
       <form
@@ -70,7 +74,7 @@
           class="btn text-white px-4 py-2 rounded mt-4 bg-black font-bold"
           id="search-btn"
         >
-         Search
+          Search
         </button>
 
         <script type="module">
@@ -99,70 +103,93 @@
 
     <main class="flex flex-col items-center pb-8">
       <section class="w-[90%] sm:w-[80%] 2xl:w-fit">
-        <h1 class="text-2xl sm:text-4xl font-bold text-center sm:text-left">
-          Here are your blogs
-        </h1>
-        <div class="flex flex-col py-6 gap-y-6">
-          {{if gt (len .posts) 0}} {{range .posts}}
-          <div class="p-5 flex flex-col gap-y-2 bg-[#fff] rounded">
-            <!-- Control -->
-            <div class="">
-              <!-- Status and Creation Date -->
-              <p class="text-sm sm:text-lg">
-                Status:
-                  {{ if .Published}}<span class="font-bold text-green-400">Published</span>{{else}}<span class="font-bold text-red-500">Drafted</span>{{end}}</span
-                >
-                |
-                <span class=""
-                  >Created At:
-                  <span class="">{{.CreatedAt | formatAsDate}}</span>
-                </span>
-              </p>
-
+        <div class="">
+          <h1 class="text-2xl sm:text-4xl font-bold text-center sm:text-left">
+            Upload An Image
+          </h1>
+          <form
+            action=""
+            method="post"
+            class="flex flex-col gap-y-4 mt-8"
+            id="imageForm"
+            enctype="multipart/form-data"
+          >
+            <div class="flex flex-col gap-y-2">
+              <label for="caption" class="font-bold">Caption</label>
+              <input
+                id="caption"
+                type="text"
+                class="border-2 rounded p-3 outline-none"
+                name="caption"
+                placeholder="Your Image Caption"
+                required
+              />
             </div>
-            <a
-              href="/blog/{{ .Slug }}"
-              target="_blank"
-              class="sm:hover:underline italic sm:hover:font-bold font-bold sm:font-normal"
+            <div class="flex flex-col gap-y-2">
+              <label for="image" class="font-bold">Image To Upload</label>
+              <input
+                id="image"
+                type="file"
+                class="border-2 rounded-full p-3 outline-none w-fit"
+                name="image"
+                placeholder="Your Image"
+                required
+                id="imageInput"
+                accept="image/*"
+                onchange="previewImage(event)"
+              />
+            </div>
+            <div id="imagePreview"></div>
+            <div
+              class="flex items-center justify-between gap-x-10 mt-5 flex-wrap gap-y-5"
             >
-              <h1 class="text-xl sm:text-3xl">{{ .Title }}</h1>
-            </a>
-            <p class="text-sm sm:text-lg">{{ .Desc }}</p>
-            <p class="text-sm mt-5">
-              <b>tags</b>: {{ range .Tags }}
-              <a href="/blog?tag={{.}}" class="text-blue-500">{{ . }}</a>
-              {{ end }}
-            </p>
-           <!-- Buttons to modify post -->
-              <div class="">
-                <!-- Delete -->
-                <button class="delete-post-btn text-red-600 font-bold" data-post-id="{{.ID | objectid}}">[DELETE]</button>
-                <!-- Edit -->
-                <a class="edit-post-btn text-blue-500 font-bold" data-post-id="{{.ID | objectid}}" href="/blog/dashboard/edit/{{.ID | objectid}}" target="_blank">[EDIT]</a>
-                <!-- Publish/Draft toggle -->
-                {{if .Published}}
-                <button class="publish-draft-btn text-red-500 font-bold" data-post-id="{{.ID | objectid}}">[DRAFT]</button>
-                {{else}}
-                <button class="publish-draft-btn text-green-400 font-bold" data-post-id="{{.ID | objectid}}">[PUBLISH]</button>
-                {{end}}
-              </div>
-          </div>
-          <hr />
-          {{ end }}
+              <button
+                class="btn py-2 px-6 text-white bg-black font-bold rounded"
+                onclick="uploadImage()"
+              >
+                Upload
+              </button>
+            </div>
+          </form>
+          <script>
+            function previewImage(event) {
+              const input = event.target;
+              const preview = document.getElementById("imagePreview");
 
-          <!-- Script to handle delete, publish and edits -->
-          <script src="/public/scripts/dashboard.js" type="module"></script>
+              if (input.files && input.files[0]) {
+                const reader = new FileReader();
 
-          {{else}}
-          <div class="text-center my-10">
-            <p class="">
-              You've astrayed way too far. Go
-              <a href="/blog" class="hover:italic font-bold">Home</a>
-            </p>
-          </div>
-          {{end}}
+                reader.onload = function (e) {
+                  preview.innerHTML = `<img src="${e.target.result}" alt="Image Preview" id="previewImg" />`;
+                };
+
+                reader.readAsDataURL(input.files[0]);
+              } else {
+                preview.innerHTML = "";
+              }
+            }
+
+            function uploadImage() {
+              const input = document.getElementById("imageInput");
+              const previewImg = document.getElementById("previewImg");
+
+              if (input.files && input.files[0]) {
+                // Perform the image upload logic here
+                // You can use FormData to send the file to the server
+                // For this example, let's just display an alert
+                alert("Image uploaded!");
+              } else {
+                alert("Please choose an image to upload.");
+              }
+            }
+          </script>
         </div>
-
+        <div class="">
+          <h1 class="text-2xl sm:text-4xl font-bold text-center sm:text-left">
+            Here Are Your Images
+          </h1>
+          <div class="flex flex-col py-6 gap-y-6"></div>
+        </div>
       </section>
       <section class="flex items-center">
         <p class="">
@@ -199,14 +226,14 @@
             pageNo = 1;
           }
 
-          nextPageLink.href = `/blog/dashboard?page=${
-            pageNo + 1
-          }${search === "" ? "" : `&search=${encodeURIComponent(search)}`}`;
+          nextPageLink.href = `/blog/dashboard?page=${pageNo + 1}${
+            search === "" ? "" : `&search=${encodeURIComponent(search)}`
+          }`;
           prevPageLink.href = `javascript: void(0);`;
           if (pageNo > 1) {
-            prevPageLink.href = `/blog/dashboard?page=${
-              pageNo - 1
-            }${search === "" ? "" : `&search=${encodeURIComponent(search)}`}`;
+            prevPageLink.href = `/blog/dashboard?page=${pageNo - 1}${
+              search === "" ? "" : `&search=${encodeURIComponent(search)}`
+            }`;
           }
         </script>
       </section>
