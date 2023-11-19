@@ -394,7 +394,7 @@ func (BlogController) UploadImages(ctx *gin.Context) {
 		return
 	}
 
-	file, header, err := ctx.Request.FormFile("file")
+	file, header, err := ctx.Request.FormFile("image")
 	if err != nil {
 		ctx.String(http.StatusBadRequest, fmt.Sprintf("Error retrieving file: %s", err))
 		return
