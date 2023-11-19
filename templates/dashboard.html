@@ -23,23 +23,15 @@
       <!-- Links -->
        <div class="flex mt-4 text-sm sm:text-lg">
         <p class="">
-          [➕<a href="" class="hover:italic hover:text-blue-500 text-blue-400" id="add-blog-link"
+          [➕<a href="/blog/dashboard/add" class="hover:italic hover:text-blue-500 text-blue-400" id="add-blog-link"
             >Add Blog</a
           >]
         </p>
         <p class="">
-          [📤<a href="" class="hover:italic hover:text-blue-500 text-blue-400" id="export-blog-link"
+          [📤<a href="/blog/dashboard/export" class="hover:italic hover:text-blue-500 text-blue-400" id="export-blog-link"
             >Export</a
           >]
         </p>
-        <script type="module">
-          const addLink = document.querySelector("#add-blog-link")
-
-          const query = new URLSearchParams(window.location.search)
-          const key =  query.get("key")
-          addLink.href = `/blog/dashboard/add?key=${key}`
-
-        </script>
       </div>
       <!-- Search -->
       <form
@@ -161,7 +153,7 @@
         </p>
         <p class="">
           [<a
-            href="/blog?page=1"
+            href="/blog/dashboard?page=1"
             id="prev-page-link"
             class="hover:italic hover:font-bold"
             >Home</a
@@ -188,19 +180,17 @@
             pageNo = 1;
           }
 
-          nextPageLink.href = `/blog?page=${
+          nextPageLink.href = `/blog/dashboard?page=${
             pageNo + 1
-          }&search=${encodeURIComponent(search)}`;
+          }${search === "" ? "" : `&search=${encodeURIComponent(search)}`}`;
           prevPageLink.href = `javascript: void(0);`;
           if (pageNo > 1) {
-            prevPageLink.href = `/blog?page=${
+            prevPageLink.href = `/blog/dashboard?page=${
               pageNo - 1
-            }&search=${encodeURIComponent(search)}`;
+            }${search === "" ? "" : `&search=${encodeURIComponent(search)}`}`;
           }
         </script>
       </section>
     </main>
-
-    <!-- TAILWIND.CSS CDN -->
   </body>
 </html>
