@@ -398,7 +398,7 @@ func (BlogController) UploadImages(ctx *gin.Context) {
 		return
 	}
 
-	file, header, err := ctx.Request.FormFile("image")
+	file, _, err := ctx.Request.FormFile("image")
 	if err != nil {
 		obj = gin.H{
 			"error": "error retrieving the file: " + err.Error(),
@@ -413,7 +413,10 @@ func (BlogController) UploadImages(ctx *gin.Context) {
 	os.MkdirAll(uploadDir, os.ModePerm)
 
 	// Create slug kinda stuff for the filename from the caption
-	filename := filepath.Join(uploadDir, header.Filename)
+	images := models.NewImages(db.GetMDB().ImagesCollection())
+	slug := images.CreateSlug(caption)
+	filename := filepath.Join(uploadDir, slug)
+
 	out, err := os.Create(filename)
 	if err != nil {
 		obj = gin.H{
@@ -434,5 +437,19 @@ func (BlogController) UploadImages(ctx *gin.Context) {
 	}
 
 	// If things are successful, then save image to database
+	image := models.ImageModel{
+		Caption:  caption,
+		Location: filename,
+		Slug:     slug,
+	}
+
+	if _, err := images.AddImage(image); err != nil {
+		obj = gin.H{
+			"error": "error saving the image to database: " + err.Error(),
+		}
+		ctx.HTML(http.StatusInternalServerError, "images.html", obj)
+		return
+	}
+
 	ctx.Redirect(http.StatusSeeOther, "/blog/dashboard/images")
 }
