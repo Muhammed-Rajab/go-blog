@@ -23,6 +23,22 @@ type BlogForm struct {
 	Publish bool               `form:"publish,omitempty" validate:""`
 }
 
+func (b *BlogForm) String() string {
+	return fmt.Sprintf(`
+Title: %s
+Desc: %s
+Publish: %t
+Tags: %v
+----------------
+
+%s
+
+================
+
+
+`, b.Title, b.Desc, b.Publish, b.Tags, b.Content)
+}
+
 type BlogModel struct {
 	ID        primitive.ObjectID `bson:"_id,omitempty" validate:"omitempty"`
 	Title     string             `bson:"title" validate:"required"`
