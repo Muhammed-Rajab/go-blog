@@ -48,7 +48,7 @@
             <p class="">
               <span class=""
                 >[🎛️<a
-                  href="/blog"
+                  href="/blog/dashboard"
                   class="hover:italic text-lg text-blue-400 hover:text-blue-500"
                   >Dashboard</a
                 >]</span
@@ -57,6 +57,7 @@
           </div>
         </header>
         <form
+          action="/blog/dashboard/add"
           method="post"
           class="flex flex-col gap-y-4 mt-8"
           id="add-blog-form"
@@ -119,10 +120,6 @@
         <!-- Script to handle form submission -->
         <script type="module">
           const addBlogForm = document.querySelector("#add-blog-form");
-
-          const key = new URLSearchParams(window.location.search).get("key");
-
-          addBlogForm.action = `/blog/dashboard/add?key=${key}`;
 
           addBlogForm.addEventListener("submit", function (e) {
             e.preventDefault();
