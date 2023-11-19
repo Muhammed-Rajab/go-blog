@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"log"
 	"net/http"
 	"strconv"
 	"text/template"
@@ -192,7 +193,16 @@ func (BlogController) AddBlogHandler(ctx *gin.Context) {
 }
 
 func (BlogController) AddBlog(ctx *gin.Context) {
-	// var obj gin.H
+	var obj gin.H = gin.H{}
+	var form models.BlogForm
+
+	if err := ctx.ShouldBind(&form); err != nil {
+		obj["error"] = "Shit took a turn for the worst: " + err.Error()
+		ctx.JSON(http.StatusBadRequest, obj)
+		return
+	}
+
+	log.Print(form.String())
 
 	// Redirect to the created blog if everything went well
 	ctx.Redirect(http.StatusSeeOther, "/blog")

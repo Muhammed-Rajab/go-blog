@@ -17,18 +17,18 @@ import (
 type BlogForm struct {
 	ID      primitive.ObjectID `form:"id,omitempty" validate:"omitempty"`
 	Title   string             `form:"title" validate:"required"`
-	Desc    string             `form:"description,omitempty" validate:""`
-	Content string             `form:"content,omitempty" validate:""`
-	Tags    string             `form:"tags,omitempty" validate:""`
-	Publish bool               `form:"publish,omitempty" validate:""`
+	Desc    string             `form:"description" validate:""`
+	Content string             `form:"content" validate:""`
+	Tags    string             `form:"tags" validate:""`
+	Publish string             `form:"publish" validate:""`
 }
 
 func (b *BlogForm) String() string {
 	return fmt.Sprintf(`
 Title: %s
 Desc: %s
-Publish: %t
-Tags: %v
+Publish: %s
+Tags: %s
 ----------------
 
 %s
