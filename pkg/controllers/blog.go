@@ -179,8 +179,10 @@ func (BlogController) EditBlogHandler(ctx *gin.Context) {
 	blog, err := blogs.FindBlogByID(id)
 	if err != nil {
 		obj = gin.H{
-			"error": "Blog does not exists",
+			"error": "blog does not exists",
 		}
+		ctx.HTML(http.StatusBadRequest, "edit_blog.html", obj)
+		return
 	}
 
 	publish := "off"
