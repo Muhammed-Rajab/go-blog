@@ -150,7 +150,36 @@ func (BlogController) TogglePublishBlog(ctx *gin.Context) {
 }
 
 func (BlogController) DeleteBlog(ctx *gin.Context) {
+	var obj gin.H
 
+	id := ctx.Param("id")
+	objectid, err := primitive.ObjectIDFromHex(id)
+
+	if err != nil {
+		obj = gin.H{
+			"status": "failed",
+			"error":  "invalid object id",
+		}
+		ctx.JSON(http.StatusBadRequest, obj)
+		return
+	}
+
+	blogs := models.NewBlogs(db.GetMDB().BlogsCollection())
+
+	if err := blogs.DeleteBlogByID(objectid.Hex()); err != nil {
+		obj = gin.H{
+			"status": "failed",
+			"error":  "failed to delete blog:" + err.Error(),
+		}
+		ctx.JSON(http.StatusBadRequest, obj)
+		return
+	}
+
+	obj = gin.H{
+		"status":  "success",
+		"message": "successfully deleted post",
+	}
+	ctx.JSON(http.StatusOK, obj)
 }
 
 func (BlogController) EditBlog(ctx *gin.Context) {

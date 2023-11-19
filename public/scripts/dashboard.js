@@ -10,6 +10,20 @@ const key = url.get("key");
 const deletePostEventHandler = (e) => {
   e.preventDefault();
   const postId = e.target.dataset.postId;
+  const url = `/blog/dashboard/${postId}?key=${key}`;
+
+  fetch(url, {
+    method: "DELETE",
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      if (data["status"] == "success") {
+        alert("successfully delete post");
+        window.location.href = window.location.href;
+      } else {
+        alert("failed to delete post");
+      }
+    });
 };
 
 const editPostEventHandler = (e) => {
