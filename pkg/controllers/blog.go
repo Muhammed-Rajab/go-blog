@@ -187,6 +187,35 @@ func (BlogController) DeleteBlog(ctx *gin.Context) {
 
 func (BlogController) EditBlogHandler(ctx *gin.Context) {
 	var obj gin.H
+
+	id := ctx.Param("id")
+	blogs := models.NewBlogs(db.GetMDB().BlogsCollection())
+
+	blog, err := blogs.FindBlogByID(id)
+	if err != nil {
+		obj = gin.H{
+			"error": "Blog does not exists",
+		}
+	}
+
+	publish := "off"
+	if blog.Published {
+		publish = "on"
+	}
+
+	form := models.BlogForm{
+		ID:      blog.ID,
+		Title:   blog.Title,
+		Desc:    blog.Desc,
+		Content: blog.Content,
+		Tags:    strings.Join(blog.Tags, ","),
+		Publish: publish,
+	}
+
+	obj = gin.H{
+		"post": form,
+	}
+
 	ctx.HTML(http.StatusOK, "edit_blog.html", obj)
 }
 
