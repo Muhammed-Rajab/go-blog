@@ -22,8 +22,9 @@
       </div>
       <form
         class="mt-8 w-full flex flex-col items-center"
-        action="/blog"
+        action=""
         method="get"
+        id="search-form"
       >
         <input
           type="text"
@@ -41,9 +42,28 @@
 
         <script type="module">
           const searchBox = document.querySelector("#search-box");
+          const searchForm = document.querySelector("#search-form");
 
           searchBox.value =
             new URLSearchParams(window.location.search).get("search") || "";
+
+          searchForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+
+            // Get current url query
+            // Set page = 1
+            // Set search to current query
+            // Keep the key and update
+            const query = new URLSearchParams(window.location.search);
+
+            query.set("search", searchBox.value);
+            query.set("page", 1);
+
+            const url = new URL(window.location.href);
+            url.search = query.toString();
+
+            window.location.assign(url.toString());
+          });
         </script>
       </form>
     </header>
