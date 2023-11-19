@@ -351,12 +351,14 @@ func (BlogController) AuthDashboard(ctx *gin.Context) {
 	form := struct {
 		Token string `form:"token"`
 	}{}
+	var obj gin.H
 
 	if err := ctx.ShouldBind(&form); err != nil {
 		// handle the token not found stuff
-		ctx.JSON(http.StatusUnauthorized, gin.H{
-			"error": "fuck off my property, mate",
-		})
+		obj = gin.H{
+			"error": "invalid token provided",
+		}
+		ctx.HTML(http.StatusUnauthorized, "auth.html", obj)
 		return
 	}
 
@@ -369,8 +371,10 @@ func (BlogController) AuthDashboard(ctx *gin.Context) {
 	}
 
 	// else render the auth page with error
-	// later....
-	ctx.Redirect(http.StatusSeeOther, "/blog/dashboard/auth")
+	obj = gin.H{
+		"error": "token does not match",
+	}
+	ctx.HTML(http.StatusBadRequest, "auth.html", obj)
 }
 
 func (BlogController) LogoutDashboard(ctx *gin.Context) {
