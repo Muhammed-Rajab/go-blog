@@ -97,7 +97,7 @@ func (BlogController) DashboardHandler(ctx *gin.Context) {
 	}, int(page), 10)
 
 	if err != nil {
-		obj["errors"] = err
+		obj["error"] = err
 	} else {
 		obj["posts"] = posts
 	}
