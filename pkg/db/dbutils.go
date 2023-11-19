@@ -88,3 +88,8 @@ func (m *MongoDB) BlogDatabase() *mongo.Database {
 func (m *MongoDB) BlogsCollection() *mongo.Collection {
 	return m.BlogDatabase().Collection("blogs")
 }
+
+// Method to get images collection
+func (m *MongoDB) ImagesCollection() *mongo.Collection {
+	return m.BlogDatabase().Collection("images")
+}
