@@ -133,7 +133,7 @@
                 <!-- Delete -->
                 <button class="delete-post-btn text-red-600 font-bold" data-post-id="{{.ID | objectid}}">[DELETE]</button>
                 <!-- Edit -->
-                <a class="edit-post-btn text-blue-500 font-bold" data-post-id="{{.ID | objectid}}" href="/blog/dashboard/edit/{{.ID | objectid}}">[EDIT]</a>
+                <a class="edit-post-btn text-blue-500 font-bold" data-post-id="{{.ID | objectid}}" href="/blog/dashboard/edit/{{.ID | objectid}}" target="_blank">[EDIT]</a>
                 <!-- Publish/Draft toggle -->
                 {{if .Published}}
                 <button class="publish-draft-btn text-red-500 font-bold" data-post-id="{{.ID | objectid}}">[DRAFT]</button>
