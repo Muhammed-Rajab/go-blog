@@ -17,11 +17,16 @@
         <!-- <p class="text-md sm:text-lg">¡Hola👋!</p> -->
         <h1 class="font-bold text-5xl sm:text-6xl">Images🖼️.</h1>
         <p class="text-lg sm:text-2xl text-center">
-          A place to manage all blogs, easily.
+          A place to manage the uploaded images, easily.
         </p>
       </div>
       <!-- Links -->
        <div class="flex flex-wrap justify-center items-center gap-y-3 mt-4 text-sm sm:text-lg">
+        <p class="">
+          [🖼️<a href="/blog/dashboard/images/export" class="hover:italic hover:text-blue-500 text-blue-400" id="export-blog-link"
+            >Upload Image</a
+          >]
+        </p>
         <p class="">
           <span class=""
             >[🏠<a
@@ -32,20 +37,20 @@
             >
         </p>
         <p class="">
-          [➕<a href="/blog/dashboard/add" class="hover:italic hover:text-blue-500 text-blue-400" id="add-blog-link"
-            >Add Blog</a
-          >]
-        </p>
-        <p class="">
-          [📤<a href="/blog/dashboard/export" class="hover:italic hover:text-blue-500 text-blue-400" id="export-blog-link"
+              <span class=""
+                >[🎛️<a
+                  href="/blog/dashboard"
+                  class="hover:italic text-lg text-blue-400 hover:text-blue-500"
+                  >Dashboard</a
+                >]</span
+              >
+            </p>
+       <p class="">
+          [📤<a href="/blog/dashboard/images/export" class="hover:italic hover:text-blue-500 text-blue-400" id="export-blog-link"
             >Export</a
           >]
         </p>
-        <p class="">
-          [🚪<a href="/blog/dashboard/auth/logout" class="hover:italic hover:text-blue-500 text-blue-400" id="add-blog-link"
-            >Log Out</a
-          >]
-        </p>
+
       </div>
       <!-- Search -->
       <form
@@ -57,7 +62,7 @@
         <input
           type="text"
           class="border-2 p-4 rounded w-[95%] sm:w-[512px] outline-none"
-          placeholder="Search for blogs"
+          placeholder="Search for images"
           id="search-box"
           name="search"
         />
