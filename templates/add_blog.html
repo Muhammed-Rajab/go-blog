@@ -36,7 +36,11 @@
         <header class="mt-24">
           <h1 class="font-bold text-3xl">Add a new blog</h1>
         </header>
-        <form action="" class="flex flex-col gap-y-4 mt-8">
+        <form
+          method="post"
+          class="flex flex-col gap-y-4 mt-8"
+          id="add-blog-form"
+        >
           <div class="flex flex-col gap-y-2">
             <label for="title" class="font-bold">Title</label>
             <input
@@ -92,6 +96,14 @@
             </button>
           </div>
         </form>
+        <!-- Script to handle form submission -->
+        <script type="module">
+          const addBlogForm = document.querySelector("#add-blog-form");
+
+          const key = new URLSearchParams(window.location.search).get("key");
+
+          addBlogForm.action = `/blog/dashboard/add?key=${key}`;
+        </script>
       </section>
     </main>
     <!-- TAILWIND.CSS CDN -->
