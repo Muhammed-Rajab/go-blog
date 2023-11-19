@@ -77,16 +77,12 @@
             <div class="">
               <!-- Status and Creation Date -->
               <p class="">
-                Status:
-                  {{ if .Published}}<span class="font-bold text-green-400">Published</span>{{else}}<span class="font-bold text-red-500">Drafted</span>{{end}}</span
-                >
-                |
-                <span class=""
-                  >Created At:
-                  <span class="">{{.CreatedAt | formatAsDate}}</span>
+                <span class="">
+                  <span class="text-sm sm:text-lg"
+                    >At {{.CreatedAt | formatAsDate}}</span
+                  >
                 </span>
               </p>
-
             </div>
             <a
               href="/blog/{{ .Slug }}"
@@ -95,7 +91,7 @@
               <h1 class="text-xl sm:text-3xl">{{ .Title }}</h1>
             </a>
             <p class="text-sm sm:text-lg">{{ .Desc }}</p>
-            <p class="text-sm">
+            <p class="text-sm mt-5">
               <b>tags</b>: {{ range .Tags }}
               <a href="/blog?tag={{.}}" class="text-blue-500">{{ . }}</a>
               {{ end }}
