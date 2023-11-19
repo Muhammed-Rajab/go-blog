@@ -176,7 +176,7 @@ func (b *Blogs) CheckBlogExistsBySlug(slug string) bool {
 }
 
 // UPDATE
-func (b *Blogs) PublishBlogByID(id string) error {
+func (b *Blogs) PublishDraftBlogByID(id string) error {
 	if !b.CheckBlogExistsByID(id) {
 		return errors.New("blog doesn't exists")
 	}
@@ -185,7 +185,9 @@ func (b *Blogs) PublishBlogByID(id string) error {
 
 	_, err := b.collection.UpdateByID(context.TODO(), objectId, bson.M{
 		"$set": bson.M{
-			"published": true,
+			"published": bson.M{
+				"$ne": true,
+			},
 		},
 	})
 	if err != nil {
