@@ -3,9 +3,97 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Add blog</title>
+    <title>Add Blog</title>
+
+    <!-- Github Markdown CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/github-markdown-css/github-markdown.min.css"
+    />
+
+    <!-- Highlight.js CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.css"
+    />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script>
+
+    <script>
+      hljs.highlightAll();
+    </script>
+
+    <!-- My styles -->
+    <link rel="stylesheet" href="/public/stylesheets/blog.css" />
+    <link rel="stylesheet" href="/public/stylesheets/markdown.css" />
   </head>
   <body>
-    <h1>add blog</h1>
+    <!-- Body goes here -->
+    <main class="flex flex-col items-center pb-10">
+      <section class="w-[90%] sm:w-[80%] lg:w-[80%]">
+        <header class="mt-24">
+          <h1 class="font-bold text-3xl">Add a new blog</h1>
+        </header>
+        <form action="" class="flex flex-col gap-y-4 mt-8">
+          <div class="flex flex-col gap-y-2">
+            <label for="title" class="font-bold">Title</label>
+            <input
+              id="title"
+              type="text"
+              class="border-2 rounded p-3 outline-none"
+              name="title"
+              placeholder="Your Blog Title"
+            />
+          </div>
+          <div class="flex flex-col gap-y-2">
+            <label for="description" class="font-bold">Description</label>
+            <textarea
+              id="description"
+              type="text"
+              class="border-2 rounded p-3 outline-none resize-none"
+              name="title"
+              placeholder="Describe Your Blog"
+              rows="3"
+            ></textarea>
+          </div>
+          <div class="flex flex-col gap-y-2">
+            <label for="content" class="font-bold">Content</label>
+            <textarea
+              id="content"
+              type="text"
+              class="border-2 rounded p-3 outline-none"
+              name="title"
+              placeholder="Put Your Markdown Content"
+              rows="8"
+            ></textarea>
+          </div>
+          <div class="flex gap-x-2 items-center">
+            <label for="tags" class="font-bold min-w-fit">Tags🏷️</label>
+            <input
+              id="tags"
+              type="text"
+              class="border-2 rounded p-3 outline-none w-full"
+              name="title"
+              placeholder="Put your tags here, comma separated"
+            />
+          </div>
+          <div
+            class="flex items-center justify-between gap-x-10 mt-5 flex-wrap gap-y-5"
+          >
+            <label for="publish" class="font-bold min-w-fit"
+              ><input type="checkbox" name="publish" id="publish" /> Publish the
+              article on save</label
+            >
+            <button class="btn py-2 px-6 text-white bg-black font-bold rounded">
+              Save
+            </button>
+          </div>
+        </form>
+      </section>
+    </main>
+    <!-- TAILWIND.CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
   </body>
 </html>
