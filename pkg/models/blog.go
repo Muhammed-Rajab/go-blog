@@ -14,6 +14,15 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
+type BlogForm struct {
+	ID      primitive.ObjectID `form:"id,omitempty" validate:"omitempty"`
+	Title   string             `form:"title" validate:"required"`
+	Desc    string             `form:"description,omitempty" validate:""`
+	Content string             `form:"content,omitempty" validate:""`
+	Tags    string             `form:"tags,omitempty" validate:""`
+	Publish bool               `form:"publish,omitempty" validate:""`
+}
+
 type BlogModel struct {
 	ID        primitive.ObjectID `bson:"_id,omitempty" validate:"omitempty"`
 	Title     string             `bson:"title" validate:"required"`
