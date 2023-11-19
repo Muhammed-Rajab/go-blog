@@ -4,13 +4,10 @@ const deleteBtns = document.querySelectorAll(".delete-post-btn");
 const editBtns = document.querySelectorAll(".edit-post-btn");
 const publishDraftBtns = document.querySelectorAll(".publish-draft-btn");
 
-const url = new URLSearchParams(window.location.search);
-const key = url.get("key");
-
 const deletePostEventHandler = (e) => {
   e.preventDefault();
   const postId = e.target.dataset.postId;
-  const url = `/blog/dashboard/${postId}?key=${key}`;
+  const url = `/blog/dashboard/${postId}`;
 
   fetch(url, {
     method: "DELETE",
@@ -34,7 +31,7 @@ const editPostEventHandler = (e) => {
 const publishDraftPostEventHandler = (e) => {
   e.preventDefault();
   const postId = e.target.dataset.postId;
-  const url = `/blog/dashboard/${postId}/toggle_publish?key=${key}`;
+  const url = `/blog/dashboard/${postId}/toggle_publish`;
 
   fetch(url, {
     method: "PUT",
