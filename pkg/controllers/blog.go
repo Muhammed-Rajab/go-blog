@@ -1,9 +1,9 @@
 package controllers
 
 import (
-	"log"
 	"net/http"
 	"strconv"
+	"strings"
 	"text/template"
 
 	"github.com/Muhammed-Rajab/go-blog/pkg/db"
@@ -202,8 +202,24 @@ func (BlogController) AddBlog(ctx *gin.Context) {
 		return
 	}
 
-	log.Print(form.String())
+	blogs := models.NewBlogs(db.GetMDB().BlogsCollection())
+
+	// Create BlogModel from form
+	blog := models.BlogModel{
+		Title:   form.Title,
+		Desc:    form.Desc,
+		Content: form.Content,
+		Tags:    tagsFromString(form.Tags),
+	}
 
 	// Redirect to the created blog if everything went well
 	ctx.Redirect(http.StatusSeeOther, "/blog")
+}
+
+func tagsFromString(stringTag string) []string {
+	tags := strings.Split(stringTag, ",")
+	for i, tag := range tags {
+		tags[i] = strings.ToLower(strings.TrimSpace(tag))
+	}
+	return tags
 }
