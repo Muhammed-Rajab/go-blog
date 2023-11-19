@@ -389,7 +389,7 @@ func (BlogController) UploadImages(ctx *gin.Context) {
 
 	if err := ctx.Request.ParseMultipartForm(10 << 20); err != nil {
 		obj = gin.H{
-			"error": "failed to parse image: " + err.Error(),
+			"error": "failed to parse image. " + err.Error(),
 		}
 		ctx.HTML(http.StatusBadRequest, "images.html", obj)
 		return
@@ -407,7 +407,7 @@ func (BlogController) UploadImages(ctx *gin.Context) {
 	file, _, err := ctx.Request.FormFile("image")
 	if err != nil {
 		obj = gin.H{
-			"error": "error retrieving the file: " + err.Error(),
+			"error": "error retrieving the file. " + err.Error(),
 		}
 		ctx.HTML(http.StatusBadRequest, "images.html", obj)
 		return
@@ -426,7 +426,7 @@ func (BlogController) UploadImages(ctx *gin.Context) {
 	out, err := os.Create(filename)
 	if err != nil {
 		obj = gin.H{
-			"error": "error saving the file: " + err.Error(),
+			"error": "error saving the file. " + err.Error(),
 		}
 		ctx.HTML(http.StatusInternalServerError, "images.html", obj)
 		return
@@ -436,7 +436,7 @@ func (BlogController) UploadImages(ctx *gin.Context) {
 	_, err = io.Copy(out, file)
 	if err != nil {
 		obj = gin.H{
-			"error": "error copying the file: " + err.Error(),
+			"error": "error copying the file. " + err.Error(),
 		}
 		ctx.HTML(http.StatusInternalServerError, "images.html", obj)
 		return
