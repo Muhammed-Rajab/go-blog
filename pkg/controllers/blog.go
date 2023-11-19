@@ -369,3 +369,13 @@ func (BlogController) LogoutDashboard(ctx *gin.Context) {
 	ctx.SetCookie("auth-token", "", -1, "/", "localhost", false, true)
 	ctx.Redirect(http.StatusSeeOther, "/blog/dashboard/auth")
 }
+
+func (BlogController) ImagesHandler(ctx *gin.Context) {
+	var obj gin.H
+	ctx.HTML(http.StatusOK, "images.html", obj)
+}
+
+func (BlogController) UploadImages(ctx *gin.Context) {
+	var obj gin.H
+	ctx.HTML(http.StatusOK, "images.html", obj)
+}

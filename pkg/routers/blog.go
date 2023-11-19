@@ -27,6 +27,9 @@ func BlogRouter(root *gin.RouterGroup) *gin.RouterGroup {
 			dashboard.GET("/edit/:id", AuthMiddleware, controller.EditBlogHandler)
 			dashboard.POST("/edit/:id", AuthMiddleware, controller.EditBlog)
 
+			dashboard.GET("/images", AuthMiddleware, controller.ImagesHandler)
+			dashboard.POST("/images", AuthMiddleware, controller.UploadImages)
+
 			dashboard.DELETE("/:id", AuthMiddleware, controller.DeleteBlog)
 			dashboard.PUT("/:id/toggle_publish", AuthMiddleware, controller.TogglePublishBlog)
 			dashboard.PUT("/:id", AuthMiddleware, controller.EditBlog)
