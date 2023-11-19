@@ -33,6 +33,7 @@
     <!-- Body goes here -->
     <main class="flex flex-col items-center pb-10">
       <section class="w-[90%] sm:w-[80%] lg:w-[80%]">
+        {{ if .post }}
         <header class="mt-24 sm:mt-48 flex flex-col items-center">
           <p class="text-md sm:text-lg my-3 sm:my-6 text-center w-fit">
             Written by
@@ -69,6 +70,24 @@
             >]</span
           >
         </p>
+        {{end}} {{with .error}}
+        <div
+          class="mt-5 w-full flex flex-col justify-center items-center gap-y-8"
+        >
+          <h1 class="font-bold text-4xl mt-24 text-center">
+            404 Blog Not Found
+          </h1>
+          <p class="">
+            <span class=""
+              >[🏠<a
+                href="/blog"
+                class="hover:italic text-blue-400 hover:text-blue-500"
+                >Blog Home</a
+              >]</span
+            >
+          </p>
+        </div>
+        {{end}}
       </section>
     </main>
     <!-- TAILWIND.CSS CDN -->

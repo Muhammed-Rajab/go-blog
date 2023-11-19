@@ -46,7 +46,7 @@ func (BlogController) HomeHandler(ctx *gin.Context) {
 	}, int(page), 10)
 
 	if err != nil {
-		obj["errors"] = err
+		obj["error"] = err
 	} else {
 		obj["posts"] = posts
 	}
@@ -65,7 +65,9 @@ func (BlogController) BlogHandler(ctx *gin.Context) {
 	templates, _ := template.New("custom-blog").Funcs(utils.GetTemplateFuncsMap()).ParseGlob("templates/*")
 
 	if err != nil {
-		obj["errors"] = err
+		obj["error"] = err.Error()
+		ctx.HTML(http.StatusBadRequest, "blog.html", obj)
+		return
 	} else {
 		post.Content = string(utils.MDToHTML([]byte(post.Content)))
 		obj["post"] = post
@@ -97,7 +99,7 @@ func (BlogController) DashboardHandler(ctx *gin.Context) {
 	}, int(page), 10)
 
 	if err != nil {
-		obj["error"] = err
+		obj["error"] = err.Error()
 	} else {
 		obj["posts"] = posts
 	}
