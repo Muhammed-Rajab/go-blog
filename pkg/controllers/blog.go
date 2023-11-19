@@ -204,7 +204,7 @@ func (BlogController) EditBlogHandler(ctx *gin.Context) {
 	}
 
 	form := models.BlogForm{
-		ID:      blog.ID,
+		ID:      blog.ID.Hex(),
 		Title:   blog.Title,
 		Desc:    blog.Desc,
 		Content: blog.Content,
@@ -220,7 +220,71 @@ func (BlogController) EditBlogHandler(ctx *gin.Context) {
 }
 
 func (BlogController) EditBlog(ctx *gin.Context) {
+	var obj gin.H = gin.H{}
+	var form models.BlogForm
 
+	if err := ctx.ShouldBind(&form); err != nil {
+		obj["error"] = "Shit took a turn for the worst: " + err.Error()
+		ctx.JSON(http.StatusBadRequest, obj)
+		// pass errors to the object and show the page, later
+		// ctx.HTML(http.StatusOK, "add_blog.html", obj)
+		return
+	}
+
+	blogs := models.NewBlogs(db.GetMDB().BlogsCollection())
+
+	// Create BlogModel from form
+	publish := false
+	if form.Publish == "on" {
+		publish = true
+	}
+
+	oid, err := primitive.ObjectIDFromHex(form.ID)
+	if err != nil {
+		obj["error"] = "Shit took a turn for the worst: " + err.Error()
+		ctx.JSON(http.StatusBadRequest, obj)
+		return
+	}
+
+	// Get created time from object
+	oldBlog, err := blogs.FindBlogByID(oid.Hex())
+	if err != nil {
+		obj["error"] = "Shit took a turn for the worst: " + err.Error()
+		ctx.JSON(http.StatusBadRequest, obj)
+		return
+	}
+
+	blog := models.BlogModel{
+		ID:        oid,
+		Title:     form.Title,
+		Desc:      form.Desc,
+		Content:   form.Content,
+		Tags:      tagsFromString(form.Tags),
+		Published: publish,
+		CreatedAt: oldBlog.CreatedAt,
+	}
+
+	err = blogs.UpdateBlogByID(oid.Hex(), blog)
+	if err != nil {
+		obj["error"] = "Shit took a turn for the worst: " + err.Error()
+		ctx.JSON(http.StatusBadRequest, obj)
+		return
+		// pass errors to the object and show the page, later
+		// ctx.HTML(http.StatusOK, "add_blog.html", obj)
+	}
+
+	// Fetch the newly saved blog from db
+	newBlog, err := blogs.FindBlogByID(oid.Hex())
+	if err != nil {
+		obj["error"] = "Shit took a turn for the worst: " + err.Error()
+		ctx.JSON(http.StatusBadRequest, obj)
+		return
+		// pass errors to the object and show the page, later
+		// ctx.HTML(http.StatusOK, "add_blog.html", obj)
+	}
+
+	// Redirect to the created blog if everything went well
+	ctx.Redirect(http.StatusSeeOther, fmt.Sprintf("/blog/%s", newBlog.Slug))
 }
 
 func (BlogController) AddBlogHandler(ctx *gin.Context) {

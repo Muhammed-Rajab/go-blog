@@ -15,12 +15,12 @@ import (
 )
 
 type BlogForm struct {
-	ID      primitive.ObjectID `form:"id,omitempty" validate:"omitempty"`
-	Title   string             `form:"title" validate:"required"`
-	Desc    string             `form:"description" validate:""`
-	Content string             `form:"content" validate:""`
-	Tags    string             `form:"tags" validate:""`
-	Publish string             `form:"publish" validate:""`
+	ID      string `form:"_id,omitempty" validate:"omitempty"`
+	Title   string `form:"title" validate:"required"`
+	Desc    string `form:"description" validate:""`
+	Content string `form:"content" validate:""`
+	Tags    string `form:"tags" validate:""`
+	Publish string `form:"publish" validate:""`
 }
 
 func (b *BlogForm) String() string {

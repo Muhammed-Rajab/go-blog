@@ -58,11 +58,12 @@
         </header>
         {{if .post}}
         <form
-          action="/blog/dashboard/add"
+          action="/blog/dashboard/edit/{{.post.ID}}"
           method="post"
           class="flex flex-col gap-y-4 mt-8"
           id="add-blog-form"
         >
+          <input type="text" value="{{.post.ID}}" class="hidden" name="_id" />
           <div class="flex flex-col gap-y-2">
             <label for="title" class="font-bold">Title</label>
             <input
