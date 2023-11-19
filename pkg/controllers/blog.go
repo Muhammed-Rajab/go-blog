@@ -379,44 +379,60 @@ func (BlogController) ImagesHandler(ctx *gin.Context) {
 
 func (BlogController) UploadImages(ctx *gin.Context) {
 
-	err := ctx.Request.ParseMultipartForm(10 << 20) // 10 MB limit
-	if err != nil {
-		ctx.String(http.StatusBadRequest, fmt.Sprintf("Error parsing form: %s", err))
+	var obj gin.H
+
+	if err := ctx.Request.ParseMultipartForm(10 << 20); err != nil {
+		obj = gin.H{
+			"error": "failed to parse image: " + err.Error(),
+		}
+		ctx.HTML(http.StatusBadRequest, "images.html", obj)
 		return
 	}
 
 	caption := ctx.Request.PostFormValue("caption")
 	if caption == "" {
-		// send error as we can't have empty captions
-		ctx.JSON(http.StatusBadRequest, gin.H{
-			"error": "empty caption",
-		})
+		obj = gin.H{
+			"error": "empty caption not allowed",
+		}
+		ctx.HTML(http.StatusBadRequest, "images.html", obj)
 		return
 	}
 
 	file, header, err := ctx.Request.FormFile("image")
 	if err != nil {
-		ctx.String(http.StatusBadRequest, fmt.Sprintf("Error retrieving file: %s", err))
+		obj = gin.H{
+			"error": "error retrieving the file: " + err.Error(),
+		}
+		ctx.HTML(http.StatusBadRequest, "images.html", obj)
 		return
 	}
 	defer file.Close()
 
+	// Move this to .env later
 	uploadDir := "./public/uploads"
 	os.MkdirAll(uploadDir, os.ModePerm)
 
+	// Create slug kinda stuff for the filename from the caption
 	filename := filepath.Join(uploadDir, header.Filename)
 	out, err := os.Create(filename)
 	if err != nil {
-		ctx.String(http.StatusInternalServerError, fmt.Sprintf("Error creating file: %s", err))
+		obj = gin.H{
+			"error": "error saving the file: " + err.Error(),
+		}
+		ctx.HTML(http.StatusInternalServerError, "images.html", obj)
 		return
 	}
 	defer out.Close()
 
 	_, err = io.Copy(out, file)
 	if err != nil {
-		ctx.String(http.StatusInternalServerError, fmt.Sprintf("Error copying file: %s", err))
+		obj = gin.H{
+			"error": "error copying the file: " + err.Error(),
+		}
+		ctx.HTML(http.StatusInternalServerError, "images.html", obj)
 		return
 	}
 
-	ctx.String(http.StatusOK, "File uploaded successfully!")
+	// If things are successful, then save image to database
+	ctx.Redirect(http.StatusSeeOther, "/blog/dashboard/images")
 }
