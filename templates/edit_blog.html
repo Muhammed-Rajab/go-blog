@@ -116,8 +116,9 @@
             class="flex items-center justify-between gap-x-10 mt-5 flex-wrap gap-y-5"
           >
             <label for="publish" class="font-bold min-w-fit"
-              ><input type="checkbox" name="publish" id="publish" /> Publish the
-              article on save</label
+              ><input type="checkbox" name="publish" id="publish" {{if eq
+              .post.Publish "on"}} checked {{end}} /> Publish the article on
+              save</label
             >
             <button class="btn py-2 px-6 text-white bg-black font-bold rounded">
               Save
