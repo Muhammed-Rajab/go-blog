@@ -20,6 +20,28 @@
           A place to manage all blogs, easily.
         </p>
       </div>
+      <!-- Links -->
+       <div class="flex mt-4 text-sm sm:text-lg">
+        <p class="">
+          [➕<a href="" class="hover:italic hover:text-blue-500 text-blue-400" id="add-blog-link"
+            >Add Blog</a
+          >]
+        </p>
+        <p class="">
+          [📤<a href="" class="hover:italic hover:text-blue-500 text-blue-400" id="export-blog-link"
+            >Export</a
+          >]
+        </p>
+        <script type="module">
+          const addLink = document.querySelector("#add-blog-link")
+
+          const query = new URLSearchParams(window.location.search)
+          const key =  query.get("key")
+          addLink.href = `/blog/dashboard/add?key=${key}`
+
+        </script>
+      </div>
+      <!-- Search -->
       <form
         class="mt-8 w-full flex flex-col items-center"
         action=""

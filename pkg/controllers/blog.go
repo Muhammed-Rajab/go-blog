@@ -185,3 +185,12 @@ func (BlogController) DeleteBlog(ctx *gin.Context) {
 func (BlogController) EditBlog(ctx *gin.Context) {
 
 }
+
+func (BlogController) AddBlogHandler(ctx *gin.Context) {
+	var obj gin.H
+	ctx.HTML(http.StatusOK, "add_blog.html", obj)
+}
+
+func (BlogController) AddBlog(ctx *gin.Context) {
+
+}
