@@ -199,6 +199,7 @@
               <img
                 src="/{{.Location}}"
                 alt="{{.Caption}}"
+                data-slug="{{.Slug}}"
                 class="h-[280px] w-fit images"
               />
             </div>
@@ -206,6 +207,30 @@
             <h1 class="">no image to be shown</h1>
             {{end}}
             <!-- Copy the image's link to clipboard on click -->
+            <script type="module">
+              const images = document.querySelectorAll(".images");
+
+              images.forEach((image) =>
+                image.addEventListener("click", (e) => {
+                  const url = image.src;
+                  const alt = image.alt;
+                  const slug = image.dataset.slug;
+
+                  const tempEl = document.createElement("textarea");
+                  tempEl.value = url;
+                  document.body.appendChild(tempEl);
+
+                  tempEl.select();
+                  tempEl.setSelectionRange(0, 99999);
+
+                  document.execCommand("copy");
+
+                  document.body.removeChild(tempEl);
+
+                  alert(`Link copied for: ${slug}`);
+                })
+              );
+            </script>
           </div>
         </div>
       </section>
