@@ -69,7 +69,7 @@ func (BlogController) BlogHandler(ctx *gin.Context) {
 		ctx.HTML(http.StatusBadRequest, "blog.html", obj)
 		return
 	} else {
-		post.Content = string(utils.MDToHTML([]byte(post.Content)))
+		// post.Content = string(utils.MDToHTML([]byte(post.Content)))
 		obj["post"] = post
 	}
 

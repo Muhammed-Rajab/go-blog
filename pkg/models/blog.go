@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/Muhammed-Rajab/go-blog/pkg/utils"
 	"github.com/go-playground/validator/v10"
 	"github.com/gosimple/slug"
 	"go.mongodb.org/mongo-driver/bson"
@@ -48,6 +49,7 @@ type BlogModel struct {
 	CreatedAt time.Time          `bson:"created_at" validate:""`
 	Slug      string             `bson:"slug" validate:""`
 	Published bool               `bson:"published" validate:""`
+	HTML      string             `bson:"html" validate:""`
 }
 
 func (b *BlogModel) String() string {
@@ -105,6 +107,7 @@ func (b *Blogs) AddBlog(blog BlogModel) (primitive.ObjectID, error) {
 	blog.ID = primitive.NewObjectID()
 	blog.CreatedAt = time.Now()
 	blog.Slug = b.CreateSlug(blog.Title)
+	blog.HTML = string(utils.MDToHTML([]byte(blog.Content)))
 
 	res, err := b.collection.InsertOne(context.TODO(), blog)
 	if err != nil {
@@ -247,6 +250,8 @@ func (b *Blogs) UpdateBlogByID(id string, body BlogModel) error {
 	updatedBlog.Tags = body.Tags
 	updatedBlog.Title = body.Title
 	updatedBlog.Desc = body.Desc
+	updatedBlog.HTML = string(utils.MDToHTML([]byte(body.Content)))
+
 	if updatedBlog.Title != old.Title {
 		updatedBlog.Slug = b.CreateSlug(updatedBlog.Title)
 	}
