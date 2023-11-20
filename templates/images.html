@@ -178,6 +178,9 @@
 
             imageUploadForm.addEventListener("submit", function (e) {
               e.preventDefault();
+
+              if (!confirm("Are you sure you want to upload this image?"))
+                return;
               if (imageInput.files && imageInput.files[0]) {
                 // Perform the image upload logic here
                 // You can use FormData to send the file to the server
