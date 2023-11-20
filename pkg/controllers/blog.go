@@ -487,3 +487,18 @@ func (BlogController) UploadImages(ctx *gin.Context) {
 
 	ctx.Redirect(http.StatusSeeOther, "/blog/dashboard/images")
 }
+
+func (BlogController) DeleteImage(ctx *gin.Context) {
+	obj := gin.H{}
+	images := models.NewImages(db.GetMDB().ImagesCollection())
+
+	id := ctx.Param("id")
+
+	if err := images.DeleteImageByID(id); err != nil {
+		obj["error"] = err.Error()
+		ctx.HTML(http.StatusBadRequest, "images.html", obj)
+		return
+	}
+
+	ctx.Redirect(http.StatusSeeOther, "/blog/dashboard/images")
+}

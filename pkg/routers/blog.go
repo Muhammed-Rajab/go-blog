@@ -29,6 +29,7 @@ func BlogRouter(root *gin.RouterGroup) *gin.RouterGroup {
 
 			dashboard.GET("/images", AuthMiddleware, controller.ImagesHandler)
 			dashboard.POST("/images", AuthMiddleware, controller.UploadImages)
+			dashboard.POST("/images/:id", AuthMiddleware, controller.DeleteImage)
 
 			dashboard.DELETE("/:id", AuthMiddleware, controller.DeleteBlog)
 			dashboard.PUT("/:id/toggle_publish", AuthMiddleware, controller.TogglePublishBlog)

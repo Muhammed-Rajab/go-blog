@@ -114,3 +114,16 @@ func (i *Images) FindImages(filter bson.M, pageNo, imagesPerPage int) ([]*ImageM
 
 	return images, nil
 }
+
+func (i *Images) DeleteImageByID(id string) error {
+	objectId, err := primitive.ObjectIDFromHex(id)
+	if err != nil {
+		return errors.Join(errors.New("invalid object id provided"), err)
+	}
+	if _, err := i.collection.DeleteOne(context.TODO(), bson.M{
+		"_id": objectId,
+	}); err != nil {
+		return errors.Join(errors.New("failed to delete image"), err)
+	}
+	return nil
+}
