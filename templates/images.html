@@ -206,12 +206,32 @@
                 <form
                   action="/blog/dashboard/images/{{.ID|objectid}}"
                   method="post"
+                  class="delete-image-form"
                 >
                   <button class="font-bold text-red-500">[DELETE]</button>
                 </form>
               </div>
             </div>
-            {{end}} {{else}}
+            {{end}}
+
+            <!-- Script to ask permission for deletion -->
+            <script type="module">
+              const deleteImageForms =
+                document.querySelectorAll(".delete-image-form");
+
+              deleteImageForms.forEach((form) =>
+                form.addEventListener("submit", function (e) {
+                  e.preventDefault();
+                  if (
+                    !confirm("Are you sure that you want to delete this image?")
+                  )
+                    return;
+
+                  this.submit();
+                })
+              );
+            </script>
+            {{else}}
             <h1 class="">no image to be shown</h1>
             {{end}}
             <!-- Copy the image's link to clipboard on click -->
