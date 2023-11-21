@@ -81,7 +81,7 @@ func (m *MongoDB) Connect() {
 
 // Method to get blog database
 func (m *MongoDB) BlogDatabase() *mongo.Database {
-	return m.Client.Database("test")
+	return m.Client.Database("go-blog")
 }
 
 // Method to get blogs collection
