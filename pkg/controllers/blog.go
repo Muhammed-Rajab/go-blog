@@ -31,6 +31,7 @@ func (BlogController) HomeHandler(ctx *gin.Context) {
 
 	pageNo := ctx.Query("page")
 	search := ctx.Query("search")
+	// Add feature to sort by order date
 
 	page, err := strconv.ParseUint(pageNo, 10, 64)
 	if err != nil {
@@ -84,6 +85,7 @@ func (BlogController) DashboardHandler(ctx *gin.Context) {
 
 	pageNo := ctx.Query("page")
 	search := ctx.Query("search")
+	// Add feature to sort by date
 
 	page, err := strconv.ParseUint(pageNo, 10, 64)
 	if err != nil {
@@ -251,7 +253,7 @@ func (BlogController) EditBlog(ctx *gin.Context) {
 		Title:     form.Title,
 		Desc:      form.Desc,
 		Content:   form.Content,
-		Tags:      tagsFromString(form.Tags),
+		Tags:      utils.TagsFromString(form.Tags),
 		Published: publish,
 		CreatedAt: oldBlog.CreatedAt,
 	}
@@ -265,7 +267,6 @@ func (BlogController) EditBlog(ctx *gin.Context) {
 		return
 	}
 
-	// Fetch the newly saved blog from db
 	newBlog, err := blogs.FindBlogByID(oid.Hex())
 	if err != nil {
 		obj = gin.H{
@@ -275,7 +276,6 @@ func (BlogController) EditBlog(ctx *gin.Context) {
 		return
 	}
 
-	// Redirect to the created blog if everything went well
 	ctx.Redirect(http.StatusSeeOther, fmt.Sprintf("/blog/%s", newBlog.Slug))
 }
 
@@ -298,7 +298,6 @@ func (BlogController) AddBlog(ctx *gin.Context) {
 
 	blogs := models.NewBlogs(db.GetMDB().BlogsCollection())
 
-	// Create BlogModel from form
 	publish := false
 	if form.Publish == "on" {
 		publish = true
@@ -308,7 +307,7 @@ func (BlogController) AddBlog(ctx *gin.Context) {
 		Title:     form.Title,
 		Desc:      form.Desc,
 		Content:   form.Content,
-		Tags:      tagsFromString(form.Tags),
+		Tags:      utils.TagsFromString(form.Tags),
 		Published: publish,
 	}
 
@@ -321,7 +320,6 @@ func (BlogController) AddBlog(ctx *gin.Context) {
 		return
 	}
 
-	// Fetch the newly saved blog from db
 	newBlog, err := blogs.FindBlogByID(oid.Hex())
 	if err != nil {
 		obj = gin.H{
@@ -331,16 +329,7 @@ func (BlogController) AddBlog(ctx *gin.Context) {
 		return
 	}
 
-	// Redirect to the created blog if everything went well
 	ctx.Redirect(http.StatusSeeOther, fmt.Sprintf("/blog/%s", newBlog.Slug))
-}
-
-func tagsFromString(stringTag string) []string {
-	tags := strings.Split(stringTag, ",")
-	for i, tag := range tags {
-		tags[i] = strings.ToLower(strings.TrimSpace(tag))
-	}
-	return tags
 }
 
 func (BlogController) AuthDashboardHandler(ctx *gin.Context) {
@@ -355,7 +344,6 @@ func (BlogController) AuthDashboard(ctx *gin.Context) {
 	var obj gin.H
 
 	if err := ctx.ShouldBind(&form); err != nil {
-		// handle the token not found stuff
 		obj = gin.H{
 			"error": "invalid token provided",
 		}
@@ -379,6 +367,7 @@ func (BlogController) AuthDashboard(ctx *gin.Context) {
 }
 
 func (BlogController) LogoutDashboard(ctx *gin.Context) {
+	// expire auth-token cookie to logout
 	ctx.SetCookie("auth-token", "", -1, "/", "localhost", false, true)
 	ctx.Redirect(http.StatusSeeOther, "/blog/dashboard/auth")
 }
