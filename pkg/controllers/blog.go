@@ -402,6 +402,7 @@ func (BlogController) ImagesHandler(ctx *gin.Context) {
 func (BlogController) UploadImages(ctx *gin.Context) {
 
 	var obj gin.H
+	images := models.NewImages(db.GetMDB().ImagesCollection())
 
 	if err := ctx.Request.ParseMultipartForm(10 << 20); err != nil {
 		obj = gin.H{
@@ -430,12 +431,20 @@ func (BlogController) UploadImages(ctx *gin.Context) {
 	}
 	defer file.Close()
 
+	// Validate image
+	if !images.ValidateImage(file) {
+		obj = gin.H{
+			"error": "the provided file is not a valid image",
+		}
+		ctx.HTML(http.StatusBadRequest, "images.html", obj)
+		return
+	}
+
 	// Move this to .env later
 	uploadDir := "./public/uploads"
 	os.MkdirAll(uploadDir, os.ModePerm)
 
 	// Create slug kinda stuff for the filename from the caption
-	images := models.NewImages(db.GetMDB().ImagesCollection())
 	slug := images.CreateSlug(caption)
 	filename := filepath.Join(uploadDir, slug)
 

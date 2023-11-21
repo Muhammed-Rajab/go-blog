@@ -4,6 +4,8 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"image"
+	"mime/multipart"
 	"time"
 
 	"github.com/gosimple/slug"
@@ -126,4 +128,9 @@ func (i *Images) DeleteImageByID(id string) error {
 		return errors.Join(errors.New("failed to delete image"), err)
 	}
 	return nil
+}
+
+func (i *Images) ValidateImage(file multipart.File) bool {
+	_, _, err := image.Decode(file)
+	return err != nil
 }
