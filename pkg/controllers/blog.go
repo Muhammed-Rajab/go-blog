@@ -431,7 +431,6 @@ func (BlogController) UploadImages(ctx *gin.Context) {
 	}
 	defer file.Close()
 
-	// Validate image
 	if !images.ValidateImage(file) {
 		obj = gin.H{
 			"error": "the provided file is not a valid image",
@@ -440,11 +439,13 @@ func (BlogController) UploadImages(ctx *gin.Context) {
 		return
 	}
 
-	// Move this to .env later
-	uploadDir := "./public/uploads"
+	uploadDir := os.Getenv("UPLOADS_DIR")
+	if uploadDir == "" {
+		uploadDir = "./public/uploads"
+	}
+
 	os.MkdirAll(uploadDir, os.ModePerm)
 
-	// Create slug kinda stuff for the filename from the caption
 	slug := images.CreateSlug(caption)
 	filename := filepath.Join(uploadDir, slug)
 
@@ -467,7 +468,6 @@ func (BlogController) UploadImages(ctx *gin.Context) {
 		return
 	}
 
-	// If things are successful, then save image to database
 	image := models.ImageModel{
 		Caption:  caption,
 		Location: filename,
