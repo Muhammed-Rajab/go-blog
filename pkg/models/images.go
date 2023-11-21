@@ -5,6 +5,10 @@ import (
 	"errors"
 	"fmt"
 	"image"
+	_ "image/jpeg"
+	_ "image/png"
+	"io"
+	"log"
 	"mime/multipart"
 	"os"
 	"time"
@@ -154,6 +158,8 @@ func (i *Images) DeleteImageByID(id string) error {
 }
 
 func (i *Images) ValidateImage(file multipart.File) bool {
-	_, _, err := image.Decode(file)
+	reader := io.TeeReader(file, os.Stdout)
+	_, _, err := image.Decode(reader)
+	log.Print(err)
 	return err == nil
 }

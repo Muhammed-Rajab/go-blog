@@ -431,13 +431,13 @@ func (BlogController) UploadImages(ctx *gin.Context) {
 	}
 	defer file.Close()
 
-	if !images.ValidateImage(file) {
-		obj = gin.H{
-			"error": "the provided file is not a valid image",
-		}
-		ctx.HTML(http.StatusBadRequest, "images.html", obj)
-		return
-	}
+	// if !images.ValidateImage(file) {
+	// 	obj = gin.H{
+	// 		"error": "the provided file is not a valid image",
+	// 	}
+	// 	ctx.HTML(http.StatusBadRequest, "images.html", obj)
+	// 	return
+	// }
 
 	uploadDir := os.Getenv("UPLOADS_DIR")
 	if uploadDir == "" {
