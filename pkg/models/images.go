@@ -132,5 +132,5 @@ func (i *Images) DeleteImageByID(id string) error {
 
 func (i *Images) ValidateImage(file multipart.File) bool {
 	_, _, err := image.Decode(file)
-	return err != nil
+	return err == nil
 }
