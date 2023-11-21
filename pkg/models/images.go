@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"image"
 	"mime/multipart"
+	"os"
 	"time"
 
 	"github.com/gosimple/slug"
@@ -122,6 +123,28 @@ func (i *Images) DeleteImageByID(id string) error {
 	if err != nil {
 		return errors.Join(errors.New("invalid object id provided"), err)
 	}
+
+	// Remove the object from the server
+	img, err := i.FindImageByID(id)
+	if err != nil {
+		return err
+	}
+
+	// Remove the file if it exists
+	if _, err := os.Stat(img.Location); err == nil {
+		err := os.Remove(img.Location)
+		if err != nil {
+			return errors.New("failed to remove error: " + err.Error())
+		}
+	}
+	// ! Commenting this for now cause im not sure
+	// ! If I want this feature now.
+	// } else if os.IsNotExist(err) {
+	// 	return errors.New("file doesn't exist")
+	// } else {
+	// 	return err
+	// }
+
 	if _, err := i.collection.DeleteOne(context.TODO(), bson.M{
 		"_id": objectId,
 	}); err != nil {
