@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"net/http"
 	"os"
 
 	"github.com/Muhammed-Rajab/go-blog/pkg/db"
@@ -29,6 +30,9 @@ func main() {
 	engine.SetFuncMap(utils.GetTemplateFuncsMap())
 	engine.LoadHTMLGlob("templates/*.html")
 	engine.Static("/public", "./public")
+	engine.NoRoute(func(ctx *gin.Context) {
+		ctx.HTML(http.StatusNotFound, "notfound.html", nil)
+	})
 
 	root := engine.Group("/")
 	routers.BlogRouter(root)
