@@ -56,8 +56,12 @@ func (BlogController) HomeHandler(ctx *gin.Context) {
 
 func (BlogController) BlogHandler(ctx *gin.Context) {
 
+	author := os.Getenv("AUTHOR")
+	if author == "" {
+		author = "Anonymous"
+	}
 	obj := gin.H{
-		"author": "Rajab",
+		"author": author,
 	}
 	slug := ctx.Param("slug")
 	blogs := models.NewBlogs(db.GetMDB().BlogsCollection())

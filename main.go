@@ -23,7 +23,12 @@ func main() {
 		log.Fatalf("BLOG_DASHBOARD_KEY missing in env variable")
 	}
 
-	db.Init("mongodb://localhost:27017")
+	// Making sure that there's a MONGODB_URI on env
+	if os.Getenv("MONGODB_URI") == "" {
+		log.Fatalf("MONGODB_URI missing in env variable")
+	}
+
+	db.Init(os.Getenv("MONGODB_URI"))
 	db.GetMDB().Connect()
 
 	engine := gin.Default()
