@@ -3,7 +3,25 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Home</title>
+
+    {{ if .post}}
+    <!-- Meta -->
+    <title>{{.post.Title}}</title>
+    <meta name="description" content="{{.post.Desc}}" />
+    <meta name="keywords" content="{{.post.Tags | tagsAsString}}" />
+    <meta name="author" content="{{.author}}" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="{{.post.Title}}" />
+    <meta property="og:description" content="{{.post.Description}}" />
+
+    <!-- Add these two later -->
+    <meta property="og:image" content="URL to an image for sharing" />
+    <meta property="og:url" content="" />
+
+    {{else}}
+    <title>404 Blog Not Found</title>
+    {{ end }}
 
     <!-- Github Markdown CDN -->
     <link
