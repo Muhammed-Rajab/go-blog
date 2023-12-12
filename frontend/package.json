@@ -3,8 +3,14 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "watch:tailwind": "tailwindcss -i ../public/stylesheets/main.css -o ../public/stylesheets/dist.css --watch",
+    "build:tailwind": "tailwindcss build -i ../public/stylesheets/main.css -o ../public/stylesheets/dist.css --minify"
+  },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "tailwindcss": "^3.3.6"
+  }
 }
